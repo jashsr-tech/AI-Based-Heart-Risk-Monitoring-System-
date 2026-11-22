@@ -1,152 +1,310 @@
-# ❤️ AI-Based Heart Risk Monitoring System
+# ❤️ Portable Heart Risk Monitoring System
 
-An AI-assisted portable heart monitoring prototype integrating ECG signal analysis, SpO₂ monitoring, and machine learning to identify abnormal cardiac rhythm patterns.
+**Real-Time ECG and SpO₂ Monitoring Using ESP32, Digital Signal Processing and Machine Learning**
 
 ## 📌 Project Overview
 
-The **AI-Based Heart Risk Monitoring System** is an academic engineering prototype designed to monitor selected cardiac parameters and analyze ECG signals using signal-processing techniques and machine learning.
+The **Portable Heart Risk Monitoring System** is an engineering project developed to monitor important cardiac parameters and analyze ECG signals using hardware integration, digital signal processing and machine learning techniques.
 
-The system combines hardware-based physiological data acquisition with software-based ECG analysis and an interactive dashboard.
+The system integrates an **ESP32 microcontroller, AD8232 ECG sensor and MAX30102 pulse oximeter** to acquire real-time physiological measurements.
 
-It uses an ESP32 microcontroller with an AD8232 ECG sensor and MAX30102 pulse oximeter to acquire physiological measurements. ECG signals are processed to extract cardiac features, which are analyzed using a trained Random Forest classification model.
+The AD8232 sensor captures the electrical activity of the heart, while the MAX30102 sensor measures blood oxygen saturation (SpO₂) and pulse rate.
 
-The system also supports MIT-BIH ECG dataset replay and synthetic ECG simulations for demonstration and validation.
+The acquired ECG signal is transmitted through the ESP32 to a Python-based application, where it undergoes digital signal processing, noise filtering, R-peak detection and PQRST feature extraction.
 
-## 🎯 Objectives
+The extracted ECG features are analyzed using a trained Random Forest classification model to identify normal and abnormal ECG rhythm patterns.
 
-- Develop a portable heart monitoring prototype.
-- Acquire ECG signals using the AD8232 sensor.
-- Monitor SpO₂ and optical pulse rate using MAX30102.
-- Process ECG signals and detect R-peaks.
-- Extract important ECG features, including P, Q, R, S and T wave characteristics.
-- Analyze heart rhythm patterns using machine learning.
-- Display physiological measurements and classification results through an interactive dashboard.
-- Demonstrate normal and abnormal ECG patterns.
+An interactive Streamlit dashboard provides real-time visualization of sensor readings, ECG waveforms, extracted cardiac features and classification results.
+
+The project also incorporates the MIT-BIH Arrhythmia Database and synthetic ECG signals for additional analysis, model development, testing and validation.
+
+## 🎯 Project Objectives
+
+- Develop a portable cardiac monitoring prototype.
+- Acquire ECG signals in real time using the AD8232 sensor.
+- Measure real-time SpO₂ and pulse rate using the MAX30102 sensor.
+- Interface multiple physiological sensors with an ESP32 microcontroller.
+- Establish serial communication between ESP32 and a Python application.
+- Process ECG signals using digital filtering techniques.
+- Detect R-peaks and identify PQRST waveform characteristics.
+- Extract important ECG parameters.
+- Analyze ECG rhythm patterns using machine learning.
+- Display real-time physiological measurements through an interactive dashboard.
+- Support dataset-based ECG analysis and synthetic signal testing.
 
 ## 🏗️ System Architecture
 
+The system consists of four major stages: sensor acquisition, microcontroller communication, signal processing and data visualization.
+
 ```text
-       PATIENT / TEST INPUT
-               |
-       +-------+-------+
-       |               |
-    AD8232           MAX30102
-   ECG Sensor       Pulse Oximeter
-       |               |
-       +-------+-------+
-               |
-             ESP32
-               |
-        USB Serial Data
-               |
-         Serial Bridge
-               |
-       +-------+--------+
-       |                |
-   ECG Processing   SpO2 / Pulse
-       |                |
-  Bandpass Filter       |
-  R-Peak Detection      |
-  PQRST Detection      |
-  Feature Extraction   |
-       |                |
-       +-------+--------+
-               |
-       Machine Learning
-        Random Forest
-               |
-       Classification
-        Normal / Abnormal
-               |
-       Streamlit Dashboard
-               |
-      Visual Monitoring
+                  USER / PATIENT
+                        |
+             +----------+----------+
+             |                     |
+          AD8232                 MAX30102
+        ECG Sensor             Pulse Oximeter
+             |                     |
+         ECG Signal            SpO2 / Pulse
+             |                     |
+             +----------+----------+
+                        |
+                       ESP32
+                  Microcontroller
+                        |
+                 USB Serial Data
+                        |
+                 Python Application
+                        |
+             +----------+----------+
+             |                     |
+        ECG Processing        SpO2 Processing
+             |                     |
+       Noise Filtering             |
+       R-Peak Detection            |
+       PQRST Detection             |
+       Feature Extraction          |
+             |                     |
+             +----------+----------+
+                        |
+                 Random Forest
+                   Classifier
+                        |
+                Normal / Abnormal
+                   Classification
+                        |
+                Streamlit Dashboard
+                        |
+              Monitoring and Display
 ```
 
 ## ⚙️ Hardware Components
 
-| Component | Purpose |
+| Component | Function |
 |---|---|
-| ESP32 | Main microcontroller |
-| AD8232 ECG Module | ECG signal acquisition |
-| MAX30102 | SpO₂ and optical pulse-rate monitoring |
-| ECG Electrodes | ECG signal collection |
-| USB Connection | Serial communication with computer |
+| ESP32 Development Board | Main microcontroller |
+| AD8232 ECG Sensor | Real-time ECG signal acquisition |
+| MAX30102 Sensor | SpO₂ and pulse-rate monitoring |
+| ECG Electrodes | Collection of electrical cardiac signals |
+| USB Cable | Power and serial communication |
 
-## 💻 Software & Technologies
+### Hardware Pin Connections
+
+**1. AD8232 ECG Sensor – ESP32**
+
+| AD8232 Pin | ESP32 Pin |
+|---|---|
+| OUTPUT | GPIO 34 |
+| LO+ | GPIO 26 |
+| LO- | GPIO 27 |
+| 3.3V | 3.3V |
+| GND | GND |
+
+**2. MAX30102 – ESP32**
+
+| MAX30102 Pin | ESP32 Pin |
+|---|---|
+| SDA | GPIO 21 |
+| SCL | GPIO 22 |
+| VIN | 3.3V |
+| GND | GND |
+
+*Note: Connections are based on the project's configured hardware setup. Verify the power requirements of the particular sensor breakout boards before connecting them.*
+
+## 💻 Software and Technologies
 
 | Technology | Application |
 |---|---|
-| Python | Main programming language |
-| NumPy | Numerical computation |
-| Pandas | Dataset processing |
+| Embedded C / Arduino | ESP32 firmware development |
+| Python | Application development and processing |
+| NumPy | Numerical computations |
+| Pandas | Dataset handling and processing |
 | SciPy | ECG signal filtering and analysis |
-| Scikit-learn | Machine learning |
+| Scikit-learn | Machine learning classification |
 | Streamlit | Interactive monitoring dashboard |
-| WFDB | MIT-BIH ECG dataset access |
-| PySerial | ESP32 serial communication |
+| WFDB | ECG dataset access and processing |
+| PySerial | Serial communication with ESP32 |
 | Joblib / Pickle | Model and preprocessing asset loading |
-| Arduino IDE | ESP32 firmware development |
+| Arduino IDE | Microcontroller programming |
+
+## 📡 Real-Time Sensor Monitoring
+
+Real-time hardware monitoring is the primary operating functionality of the system.
+
+### 1. ECG Signal Acquisition
+
+The AD8232 ECG sensor captures the electrical activity associated with the heart using ECG electrodes.
+
+The acquired analog signal is supplied to the ESP32 through its analog input pin.
+
+The ESP32 samples the ECG signal and transmits the readings to the Python application through USB serial communication.
+
+The received ECG data is processed to identify waveform characteristics and derive cardiac parameters.
+
+### 2. SpO₂ and Pulse-Rate Monitoring
+
+The MAX30102 is an optical sensor that uses red and infrared light to estimate blood oxygen saturation.
+
+The sensor also detects pulse-related information from optical measurements.
+
+The ESP32 communicates with the MAX30102 through the I2C protocol and retrieves the sensor measurements.
+
+The acquired SpO₂ and pulse-rate values are transmitted to the monitoring application for real-time display.
+
+### 3. Real-Time Dashboard
+
+The monitoring dashboard provides:
+
+- Live ECG waveform visualization.
+- Real-time SpO₂ readings.
+- Pulse-rate measurements.
+- ECG-derived heart-rate estimates.
+- Extracted ECG features.
+- Classification results.
+- Sensor and serial communication status.
 
 ## 🧠 ECG Signal Processing
 
-The ECG processing pipeline performs:
+ECG signal processing is performed to convert the acquired waveform into meaningful cardiac features.
 
-1. ECG signal acquisition.
-2. Fourth-order Butterworth bandpass filtering (0.5–40 Hz).
-3. R-peak detection.
-4. P-Q-R-S-T morphological peak detection.
-5. RR interval calculation.
-6. Heart-rate and HRV estimation.
-7. ECG feature extraction.
-8. Machine-learning inference.
+### Signal Processing Workflow
+
+1. **Signal Acquisition:** Receives ECG samples from the AD8232 sensor.
+2. **Noise Filtering:** Applies digital filtering to reduce unwanted signal noise.
+3. **R-Peak Detection:** Identifies R-peaks in the ECG waveform.
+4. **PQRST Detection:** Identifies important waveform components.
+5. **RR Interval Calculation:** Determines the time between consecutive R-peaks.
+6. **Heart-Rate Estimation:** Calculates heart rate using RR intervals.
+7. **HRV Analysis:** Extracts heart-rate variability parameters.
+8. **Feature Extraction:** Generates relevant features for classification.
+9. **Model Inference:** Supplies the extracted features to the trained classification model.
+
+### Digital Filtering
+
+The ECG processing pipeline uses a fourth-order Butterworth bandpass filter with a frequency range of 0.5–40 Hz in the configured processing stage.
+
+Filtering helps reduce unwanted baseline variations and high-frequency noise.
 
 ### Extracted ECG Features
 
-- Heart Rate
-- RR Interval
-- Heart Rate Variability (HRV)
-- PR Interval
-- QRS Duration
-- QT Interval
-- ST Segment
-- P Wave Amplitude
-- R Wave Amplitude
-- T Wave Amplitude
+The system's ECG feature extraction includes:
 
-## 🤖 Machine Learning
+| Feature | Description |
+|---|---|
+| Heart Rate | Estimated beats per minute |
+| RR Interval | Time between consecutive R-peaks |
+| HRV | Heart-rate variability |
+| SDNN | Standard deviation of normal RR intervals |
+| RMSSD | Root mean square of successive RR differences |
+| PR Interval | Time between P-wave onset and QRS onset |
+| QRS Duration | Duration of ventricular depolarization |
+| QT Interval | Duration from QRS onset to T-wave end |
+| QTc Interval | Corrected QT interval |
+| ST Segment | ST-segment characteristics |
+| P Wave | P-wave characteristics |
+| R Wave | R-wave characteristics |
+| T Wave | T-wave characteristics |
 
-The project uses a trained Random Forest classification model to distinguish between normal and abnormal ECG patterns.
+*The reliability and availability of individual ECG features depend on signal quality and the processing mode.*
 
-**Dataset:** MIT-BIH Arrhythmia Database.
+## 🤖 Machine Learning and ECG Classification
 
-**Classification output:**
-- Normal
-- Abnormal
+The project incorporates a trained **Random Forest Classifier** to analyze extracted ECG features and distinguish between normal and abnormal ECG patterns.
 
-The dashboard uses a pretrained model along with its corresponding imputer and scaler.
+### Dataset
 
-Synthetic PVC-like and tachycardia-like ECG signals are also supported for demonstration and software validation.
+**MIT-BIH Arrhythmia Database**
 
-## 📊 Interactive Dashboard
+The MIT-BIH Arrhythmia Database is used for ECG data analysis, model development and classification experiments.
 
-The Streamlit dashboard provides:
+### Model Development Workflow
 
-- Normal ECG replay using MIT-BIH Record 100.
-- Synthetic abnormal ECG simulation.
-- PVC and tachycardia demonstration presets.
+1. Load ECG recordings and annotations.
+2. Preprocess the ECG signals.
+3. Extract relevant cardiac features.
+4. Prepare and label the feature dataset.
+5. Train the Random Forest classification model.
+6. Evaluate model performance.
+7. Save the trained model and preprocessing assets.
+8. Load the trained model into the monitoring application.
+9. Perform classification using extracted ECG features.
+
+### Classification Output
+
+The model provides the following classification categories:
+
+- Normal ECG pattern.
+- Abnormal ECG pattern.
+
+The classification output is displayed on the Streamlit dashboard.
+
+The project includes saved model and preprocessing assets used by the application.
+
+## 📊 Interactive Monitoring Dashboard
+
+The Streamlit application acts as the main interface for monitoring and analyzing the acquired data.
+
+### Dashboard Features
+
+- Real-time ECG waveform visualization.
+- Live SpO₂ monitoring.
+- Pulse-rate display.
+- ECG-derived heart-rate estimation.
+- ECG feature extraction.
+- Random Forest classification output.
+- MIT-BIH ECG waveform analysis.
+- Synthetic ECG simulation.
+- PVC-like and tachycardia-like demonstration patterns.
+- Sensor communication status.
+- Monitoring and testing modes.
+
+## 🧪 Operating Modes
+
+The system supports three different operating modes.
+
+### 1. Real-Time Hardware Monitoring
+
+This mode uses the physical sensors connected to the ESP32.
+
+- ECG acquisition through the AD8232 sensor.
+- SpO₂ measurement through the MAX30102 sensor.
+- Pulse-rate monitoring.
+- ESP32-based sensor interfacing.
+- USB serial communication.
+- ECG signal processing and feature extraction.
+- Machine learning classification.
+- Dashboard visualization of sensor measurements and analysis.
+
+### 2. MIT-BIH Dataset Analysis
+
+The MIT-BIH Arrhythmia Database is used for:
+
 - ECG waveform visualization.
-- Beat navigation and playback controls.
-- Random Forest classification results.
-- ECG feature telemetry.
-- ESP32 sensor telemetry.
-- SpO₂ and optical pulse-rate display.
-- System connection and operational status.
+- Normal and abnormal rhythm analysis.
+- ECG feature extraction.
+- Model development.
+- Classification testing and evaluation.
+
+The dashboard supports ECG recording replay, including MIT-BIH Record 100.
+
+### 3. Synthetic ECG Simulation
+
+Synthetic ECG signals are used for software testing and demonstration.
+
+Supported demonstrations include:
+
+- Normal ECG waveform generation.
+- PVC-like ECG pattern simulation.
+- Tachycardia-like ECG pattern simulation.
+- ECG feature extraction testing.
+- Signal-processing pipeline validation.
+- Classification testing.
+
+**Important:** Real-time ECG and SpO₂ measurements are acquired using physical sensors. MIT-BIH recordings and synthetic ECG signals are separate inputs used for dataset analysis, model development, testing and simulation.
 
 ## 📁 Project Structure
 
 ```text
-Heart-Risk-Monitoring-System/
+AI-Based-Heart-Risk-Monitoring-System-/
 │
 ├── 01_signal_generation/
 │
@@ -161,9 +319,6 @@ Heart-Risk-Monitoring-System/
 ├── esp32_sensor_firmware/
 │
 ├── models/
-│   ├── stage7_rf_combined_with_ind.pkl
-│   ├── ecg_feature_imputer.pkl
-│   └── ecg_feature_scaler.pkl
 │
 ├── dashboard.py
 ├── ecg_pipeline.py
@@ -178,96 +333,155 @@ Heart-Risk-Monitoring-System/
 └── README.md
 ```
 
-*The folder structure above highlights the main components; individual folders may contain additional datasets, scripts and results.*
+The folders contain the major components of the project:
 
-## 🚀 Installation & Setup
+| Directory / File | Description |
+|---|---|
+| `01_signal_generation/` | ECG signal generation and input preparation |
+| `02_signal_processing/` | ECG signal processing |
+| `03_feature_extraction/` | Cardiac feature extraction |
+| `04_machine_learning/` | Model development and classification |
+| `05_results/` | Experimental results and outputs |
+| `esp32_sensor_firmware/` | ESP32 firmware |
+| `models/` | Trained model and preprocessing assets |
+| `dashboard.py` | Dashboard-related functionality |
+| `ecg_pipeline.py` | ECG processing pipeline |
+| `serial_bridge.py` | Serial communication handling |
+| `streamlit_app.py` | Main Streamlit application |
+| `test_app_modes.py` | Application mode testing |
+| `test_dashboard_backend.py` | Dashboard backend testing |
+| `test_max30102.py` | MAX30102 sensor testing |
+| `verify_all_9_points.py` | Project verification script |
 
-### 1. Clone the repository
+## 🚀 Installation and Setup
+
+### Prerequisites
+
+- Python 3.10 or later.
+- Arduino IDE.
+- ESP32 development board.
+- AD8232 ECG sensor.
+- MAX30102 sensor.
+- USB data cable.
+- Windows, Linux or macOS computer.
+
+### Step 1: Clone the Repository
+
+Open your terminal or command prompt and execute:
 
 ```bash
-git clone https://github.com/jashsr-tech/Heart-Risk-Monitoring-System-.git
-
-cd Heart-Risk-Monitoring-System-
+git clone https://github.com/jashsr-tech/AI-Based-Heart-Risk-Monitoring-System-.git
 ```
 
-### 2. Create a virtual environment
+Navigate into the project directory:
+
+```bash
+cd AI-Based-Heart-Risk-Monitoring-System-
+```
+
+### Step 2: Create a Virtual Environment
 
 ```bash
 python -m venv venv
 ```
 
-Activate it on Windows:
+Activate the environment on Windows:
 
 ```bash
 venv\Scripts\activate
 ```
 
-### 3. Install dependencies
+### Step 3: Install Dependencies
+
+Install the required Python libraries:
 
 ```bash
 pip install numpy pandas scipy scikit-learn streamlit wfdb pyserial joblib
 ```
 
-### 4. Configure hardware
+If a `requirements.txt` file is added to the repository, dependencies can also be installed using:
 
-- Connect the AD8232 ECG module to the ESP32.
-- Connect the MAX30102 sensor through I2C.
-- Upload the firmware from `esp32_sensor_firmware/` using Arduino IDE.
-- Connect the ESP32 to the computer using USB.
+```bash
+pip install -r requirements.txt
+```
 
-### 5. Configure serial communication
+### Step 4: Configure the Hardware
 
-Check the ESP32 COM port in Windows Device Manager.
+1. Connect the AD8232 ECG sensor to the ESP32.
+2. Connect the MAX30102 sensor using I2C.
+3. Open the ESP32 firmware from the `esp32_sensor_firmware/` directory.
+4. Select the appropriate ESP32 board in Arduino IDE.
+5. Select the correct serial port.
+6. Upload the firmware.
+7. Connect the ESP32 to the computer using a USB data cable.
 
-Update the serial port configuration in `streamlit_app.py` if required.
+### Step 5: Configure Serial Communication
 
-Default baud rate: `115200`.
+Identify the ESP32 serial port through Device Manager on Windows or the appropriate serial-device listing on other operating systems.
 
-### 6. Configure dataset location
+Configure the correct port in the Python application.
 
-The current dashboard references a local MIT-BIH database path. Update `MITBIH_RAW_DIR` in `streamlit_app.py` to the location of your downloaded MIT-BIH Arrhythmia Database.
+The configured communication baud rate is:
 
-Ensure the required model files and demonstration data are available in their expected directories.
+```text
+115200
+```
 
-### 7. Run the dashboard
+Make sure another application, such as Arduino Serial Monitor, is not occupying the same serial port while the dashboard is running.
+
+### Step 6: Configure the Dataset
+
+Download the MIT-BIH Arrhythmia Database and configure its local directory in the application.
+
+Update the dataset path if required.
+
+Ensure that the trained model and corresponding preprocessing files are available in their expected locations.
+
+### Step 7: Run the Application
+
+Execute:
 
 ```bash
 streamlit run streamlit_app.py
 ```
 
-The dashboard should open in your default web browser.
+The Streamlit dashboard should open in your default web browser.
 
-## 🧪 Demonstration Modes
+## 🔬 Testing and Validation
 
-**1. Normal ECG Mode**
+Different components of the system can be tested independently.
 
-Uses MIT-BIH Record 100 to demonstrate ECG waveform replay and feature analysis.
+The project includes testing activities for:
 
-**2. Abnormal ECG Mode**
-
-Uses synthetic ECG signals to demonstrate PVC-like and tachycardia-like patterns and machine-learning classification.
-
-**3. Hardware Sensor Mode**
-
-Receives ECG and MAX30102 sensor telemetry from the ESP32 through USB serial communication.
-
-*Synthetic ECG is used as a simulation and validation input, not represented as a live patient ECG recording.*
+- AD8232 ECG sensor acquisition.
+- MAX30102 sensor communication.
+- ESP32 serial communication.
+- ECG signal filtering.
+- R-peak detection.
+- PQRST feature extraction.
+- ECG parameter calculation.
+- Random Forest classification.
+- MIT-BIH dataset analysis.
+- Synthetic ECG simulation.
+- Dashboard functionality.
 
 ## 🔮 Future Enhancements
 
-- Improve real-time ECG acquisition and signal quality.
-- Enhance machine-learning classification performance.
-- Integrate additional ECG datasets.
-- Improve motion-artifact handling.
+- Improve real-time ECG signal quality.
+- Enhance ECG classification performance.
+- Improve motion-artifact rejection.
+- Expand ECG dataset coverage.
+- Improve the reliability of extracted cardiac features.
+- Integrate additional physiological parameters.
 - Develop a standalone portable monitoring interface.
-- Add secure patient data storage and historical analysis.
-- Validate the system against clinically reviewed ECG recordings.
+- Add secure patient data storage.
+- Implement historical monitoring and trend analysis.
+- Perform extensive validation using clinically reviewed ECG recordings.
 
 ## ⚠️ Disclaimer
 
-This project is an academic engineering prototype intended for educational, research and demonstration purposes only.
+This project is an engineering prototype intended for educational, research and demonstration purposes.
 
-It is not a certified medical device and must not be used for clinical diagnosis, treatment decisions or emergency medical assessment. Machine-learning predictions are experimental and are not clinically validated.
+It is not a certified medical device and must not be used for clinical diagnosis, treatment decisions or emergency medical assessment.
 
-
-
+The classification results are experimental and have not been clinically validated. Sensor readings and extracted parameters may be affected by electrode placement, movement, signal quality and hardware limitations.
