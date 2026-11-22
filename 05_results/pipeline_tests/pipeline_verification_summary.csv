@@ -1,0 +1,4 @@
+TestName,Duration_s,DetectedBeats,Mean_HR_bpm,QRS_Duration_ms,HRV_SDNN_ms,PredictedClass,NormalProb,AbnormalProb,Success
+Test 1: Normal (60s),60.0,71,71.91,75.47,51.57,NORMAL,93.6,6.4,True
+Test 2: Simulated PVC (60s),60.0,71,72.0,90.34,240.65,ABNORMAL,0.0,100.0,True
+Test 3: Short Signal (10s),10.0,11,70.89,75.25,52.43,NORMAL,93.6,6.4,True

@@ -1,0 +1,256 @@
+
+========================================================================
+STAGE 2M — MODEL DECISION DIAGNOSTIC
+========================================================================
+Purpose: explain the saved model's prediction.
+No training, model saving, or dataset modification is performed.
+Project directory: C:\Users\srjas\OneDrive\Desktop\ECG FINAL PROJ
+Model directory:   C:\Users\srjas\OneDrive\Desktop\proj code
+
+========================================================================
+1. FILE CHECK
+========================================================================
+FOUND: Saved model: C:\Users\srjas\OneDrive\Desktop\proj code\ecg_decision_tree_model.pkl
+FOUND: Saved scaler: C:\Users\srjas\OneDrive\Desktop\proj code\ecg_feature_scaler.pkl
+FOUND: Saved feature order: C:\Users\srjas\OneDrive\Desktop\proj code\model_feature_order.txt
+FOUND: Training dataset: C:\Users\srjas\OneDrive\Desktop\ECG FINAL PROJ\04_machine_learning\ecg_features_balanced_clean_labeled.csv
+FOUND: Stage 2E feature vector: C:\Users\srjas\OneDrive\Desktop\ECG FINAL PROJ\03_feature_extraction\ecg_ml_features.npy
+
+========================================================================
+2. FEATURE ORDER CHECK
+========================================================================
+Expected number of features: 10
+Saved number of features:    10
+ 1. HeartRate
+ 2. RRInterval
+ 3. PRInterval
+ 4. QRSDuration
+ 5. QTInterval
+ 6. STSegment
+ 7. HRV
+ 8. PAmplitude
+ 9. RAmplitude
+10. TAmplitude
+PASS: Saved feature order matches.
+
+========================================================================
+3. SYNTHETIC ECG FEATURE VECTOR
+========================================================================
+HeartRate      : 71.91438763
+RRInterval     : 0.83432540
+PRInterval     : 0.16017214
+QRSDuration    : 0.09229264
+QTInterval     : 0.35105634
+STSegment      : -0.31447483
+HRV            : 0.05156791
+PAmplitude     : 0.28571171
+RAmplitude     : 4.15882634
+TAmplitude     : 0.68568344
+
+========================================================================
+4. LOAD EXISTING MODEL AND SCALER
+========================================================================
+Model type:  DecisionTreeClassifier
+Scaler type: StandardScaler
+Model classes: [np.int64(0), np.int64(1)]
+Scaler input feature count: 10
+Model input feature count:  10
+
+========================================================================
+5. SCALED FEATURE VALUES
+========================================================================
+HeartRate      : raw= 71.914388  scaled=-0.170554
+RRInterval     : raw= 0.834325  scaled=-0.069329
+PRInterval     : raw= 0.160172  scaled= 1.284372
+QRSDuration    : raw= 0.092293  scaled= 0.645207
+QTInterval     : raw= 0.351056  scaled= 0.211632
+STSegment      : raw=-0.314475  scaled= 0.221150
+HRV            : raw= 0.051568  scaled=-0.159665
+PAmplitude     : raw= 0.285712  scaled=-0.000969
+RAmplitude     : raw= 4.158826  scaled=-0.238001
+TAmplitude     : raw= 0.685683  scaled=-0.001676
+
+========================================================================
+6. REPRODUCE MODEL PREDICTION
+========================================================================
+Predicted label: 1
+Predicted class: ABNORMAL
+Class 0 (NORMAL): 1.36%
+Class 1 (ABNORMAL): 98.64%
+Highest model probability: 98.64%
+
+========================================================================
+7. DECISION TREE FEATURE IMPORTANCE
+========================================================================
+Features ranked from highest to lowest importance:
+ 1. HRV             importance=0.532127 (53.21%)
+ 2. HeartRate       importance=0.194111 (19.41%)
+ 3. RRInterval      importance=0.085667 (8.57%)
+ 4. QRSDuration     importance=0.054484 (5.45%)
+ 5. PRInterval      importance=0.050120 (5.01%)
+ 6. QTInterval      importance=0.041321 (4.13%)
+ 7. STSegment       importance=0.025475 (2.55%)
+ 8. TAmplitude      importance=0.010378 (1.04%)
+ 9. RAmplitude      importance=0.003971 (0.40%)
+10. PAmplitude      importance=0.002346 (0.23%)
+Note: importance measures contribution to tree splits in training; it does not prove a feature causes a condition.
+
+========================================================================
+8. EXACT DECISION TREE PATH
+========================================================================
+Each rule below is evaluated using SCALED feature values.
+Raw-equivalent thresholds are approximate and assume StandardScaler.
+
+Step 1: node 0
+  Rule: HRV <= -0.08234663
+  Input scaled value: -0.15966543
+  Result: go LEFT
+  Approximate raw threshold: 0.20217625
+
+Step 2: node 1
+  Rule: HeartRate <= 0.81662834
+  Input scaled value: -0.17055396
+  Result: go LEFT
+  Approximate raw threshold: 89.44137698
+
+Step 3: node 2
+  Rule: PRInterval > -1.12901074
+  Input scaled value: 1.28437198
+  Result: go RIGHT
+  Approximate raw threshold: 0.07083333
+
+Step 4: node 32
+  Rule: QTInterval > -0.96545625
+  Input scaled value: 0.21163187
+  Result: go RIGHT
+  Approximate raw threshold: 0.27916667
+
+Step 5: node 68
+  Rule: STSegment > -1.84311277
+  Input scaled value: 0.22114983
+  Result: go RIGHT
+  Approximate raw threshold: -1.66449293
+
+Step 6: node 90
+  Rule: HeartRate > -0.44865051
+  Input scaled value: -0.17055396
+  Result: go RIGHT
+  Approximate raw threshold: 66.97690514
+
+Step 7: node 108
+  Rule: HRV > -0.16061573
+  Input scaled value: -0.15966543
+  Result: go RIGHT
+  Approximate raw threshold: 0.04971682
+
+Step 8: node 112
+  Rule: HRV <= -0.12094628
+  Input scaled value: -0.15966543
+  Result: go LEFT
+  Approximate raw threshold: 0.12698847
+
+Step 9: node 113
+  Rule: QRSDuration > -0.00782624
+  Input scaled value: 0.64520659
+  Result: go RIGHT
+  Approximate raw threshold: 0.07916667
+
+Step 10: node 117
+  Rule: PAmplitude <= 4.15844750
+  Input scaled value: -0.00096909
+  Result: go LEFT
+  Approximate raw threshold: 2.59494593
+
+Step 11: reached leaf node 118.
+
+Final leaf node: 118
+Leaf class values: [0.013595166163141994, 0.986404833836858]
+Training samples reaching leaf: 1324
+
+========================================================================
+9. TRAINING DATASET CHECK
+========================================================================
+Dataset rows: 52964
+Dataset columns: 14
+Unique records: 48
+Missing feature values: 0
+
+Label counts:
+Label 0 (NORMAL): 26482
+Label 1 (ABNORMAL): 26482
+
+Label counts by record:
+Records containing both labels: 0
+If this value is zero, each record contains only one class label; record-level differences may influence predictions.
+
+========================================================================
+10. SYNTHETIC FEATURES VS DATASET DISTRIBUTIONS
+========================================================================
+Values below describe dataset rows, not independent patients. They do not establish clinical normal ranges.
+
+--- HeartRate ---
+Synthetic value: 71.91438763
+Label 0 (NORMAL): median=71.760797, 1st-99th percentile=[36.548223, 93.506494], synthetic within range=True
+Label 1 (ABNORMAL): median=78.832117, 1st-99th percentile=[23.529412, 118.032787], synthetic within range=True
+
+--- RRInterval ---
+Synthetic value: 0.83432540
+Label 0 (NORMAL): median=0.836111, 1st-99th percentile=[0.641667, 1.641667], synthetic within range=True
+Label 1 (ABNORMAL): median=0.761111, 1st-99th percentile=[0.508333, 2.550000], synthetic within range=True
+
+--- PRInterval ---
+Synthetic value: 0.16017214
+Label 0 (NORMAL): median=0.122222, 1st-99th percentile=[0.030556, 0.166667], synthetic within range=True
+Label 1 (ABNORMAL): median=0.102778, 1st-99th percentile=[0.030556, 0.166667], synthetic within range=True
+
+--- QRSDuration ---
+Synthetic value: 0.09229264
+Label 0 (NORMAL): median=0.077778, 1st-99th percentile=[0.044444, 0.108333], synthetic within range=True
+Label 1 (ABNORMAL): median=0.080556, 1st-99th percentile=[0.038889, 0.108333], synthetic within range=True
+
+--- QTInterval ---
+Synthetic value: 0.35105634
+Label 0 (NORMAL): median=0.355556, 1st-99th percentile=[0.255556, 0.425000], synthetic within range=True
+Label 1 (ABNORMAL): median=0.330556, 1st-99th percentile=[0.097222, 0.438889], synthetic within range=True
+
+--- STSegment ---
+Synthetic value: -0.31447483
+Label 0 (NORMAL): median=-0.478480, 1st-99th percentile=[-1.526090, 1.356324], synthetic within range=True
+Label 1 (ABNORMAL): median=-0.441914, 1st-99th percentile=[-2.805108, 1.707887], synthetic within range=True
+
+--- HRV ---
+Synthetic value: 0.05156791
+Label 0 (NORMAL): median=0.121056, 1st-99th percentile=[0.042215, 0.659738], synthetic within range=True
+Label 1 (ABNORMAL): median=0.256917, 1st-99th percentile=[0.027248, 5.161043], synthetic within range=True
+
+--- PAmplitude ---
+Synthetic value: 0.28571171
+Label 0 (NORMAL): median=0.295835, 1st-99th percentile=[-0.894067, 2.048329], synthetic within range=True
+Label 1 (ABNORMAL): median=0.177567, 1st-99th percentile=[-0.802429, 2.063181], synthetic within range=True
+
+--- RAmplitude ---
+Synthetic value: 4.15882634
+Label 0 (NORMAL): median=4.731625, 1st-99th percentile=[2.209198, 7.700417], synthetic within range=True
+Label 1 (ABNORMAL): median=4.149005, 1st-99th percentile=[2.067714, 7.103358], synthetic within range=True
+
+--- TAmplitude ---
+Synthetic value: 0.68568344
+Label 0 (NORMAL): median=0.489529, 1st-99th percentile=[-0.560570, 2.764778], synthetic within range=True
+Label 1 (ABNORMAL): median=0.617521, 1st-99th percentile=[-0.740021, 2.844389], synthetic within range=True
+
+========================================================================
+11. RECORD-LEVEL LABEL DIAGNOSTIC
+========================================================================
+Label 0 (NORMAL): 13 records -> [100, 101, 103, 105, 109, 111, 112, 113, 115, 121, 122, 123, 124]
+Label 1 (ABNORMAL): 35 records -> [102, 104, 106, 107, 108, 114, 116, 117, 118, 119, 200, 201, 202, 203, 205, 207, 208, 209, 210, 212, 213, 214, 215, 217, 219, 220, 221, 222, 223, 228, 230, 231, 232, 233, 234]
+
+========================================================================
+12. INTERPRETATION
+========================================================================
+Saved model prediction: ABNORMAL
+Highest model probability: 98.64%
+The decision path identifies the exact split rules that led to this prediction.
+Feature importance is a global training statistic; the decision path explains this individual prediction.
+A feature lying inside a dataset percentile range does not prove that its definition or units match the training data.
+Because records may be associated with one label each, do not treat row-level balance or a single test split as proof of generalization to new patients.
+This output is not a medical diagnosis and must not be used to guide patient treatment.

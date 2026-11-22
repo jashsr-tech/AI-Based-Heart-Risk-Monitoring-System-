@@ -1,0 +1,84 @@
+{
+  "Train_Dev": {
+    "count_subjects": 30,
+    "subjects": [
+      "Subject_100",
+      "Subject_101",
+      "Subject_102",
+      "Subject_105",
+      "Subject_106",
+      "Subject_107",
+      "Subject_109",
+      "Subject_111",
+      "Subject_112",
+      "Subject_113",
+      "Subject_115",
+      "Subject_116",
+      "Subject_117",
+      "Subject_118",
+      "Subject_119",
+      "Subject_122",
+      "Subject_124",
+      "Subject_200",
+      "Subject_201_202",
+      "Subject_203",
+      "Subject_209",
+      "Subject_210",
+      "Subject_212",
+      "Subject_213",
+      "Subject_214",
+      "Subject_223",
+      "Subject_230",
+      "Subject_231",
+      "Subject_232",
+      "Subject_234"
+    ],
+    "contains_stage2_exploratory": true,
+    "exploratory_subjects": [
+      "Subject_100",
+      "Subject_106",
+      "Subject_109",
+      "Subject_111",
+      "Subject_113",
+      "Subject_115",
+      "Subject_118",
+      "Subject_119",
+      "Subject_124",
+      "Subject_200",
+      "Subject_201_202",
+      "Subject_210",
+      "Subject_212",
+      "Subject_214"
+    ]
+  },
+  "Validation": {
+    "count_subjects": 7,
+    "subjects": [
+      "Subject_103",
+      "Subject_108",
+      "Subject_121",
+      "Subject_208",
+      "Subject_219",
+      "Subject_222",
+      "Subject_228"
+    ],
+    "contains_stage2_exploratory": false
+  },
+  "Independent_Test": {
+    "count_subjects": 10,
+    "subjects": [
+      "Subject_104",
+      "Subject_114",
+      "Subject_123",
+      "Subject_205",
+      "Subject_207",
+      "Subject_215",
+      "Subject_217",
+      "Subject_220",
+      "Subject_221",
+      "Subject_233"
+    ],
+    "contains_stage2_exploratory": false,
+    "certification": "100% Genuinely Unseen Subjects reserved for final evaluation (Stage 10). Frozen from tuning."
+  }
+}

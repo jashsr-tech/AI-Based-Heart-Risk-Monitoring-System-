@@ -1,0 +1,175 @@
+================================================================================
+ECG FINAL PRO — STAGE 5: PREPROCESSING, IMPUTER & SCALER PIPELINE
+Strict Train_Dev Fitting | Zero-Leakage Validation | Population Variance Standardization
+================================================================================
+
+1. DATASET LOADING & PARTITION INTEGRITY CHECK:
+   Source Dataset: C:\Users\srjas\OneDrive\Desktop\ECG FINAL PROJ\04_machine_learning\mitbih_beat_features_mapped_v2_k10.csv
+   Total rows loaded: 101,425 beats across 48 records / 47 subjects.
+   Partition breakdown:
+     - Train_Dev        : 66,679 beats (65.74%)
+     - Validation       : 15,349 beats (15.13%)
+     - Independent_Test : 19,397 beats (19.12%) [FROZEN / UNTOUCHED]
+   Subject_201_202 partition check: ['Train_Dev'] (Verified 100% in Train_Dev).
+
+2. FIXED FEATURE COLUMN ORDER & LEAKAGE EXCLUSION:
+   Numerical Features (9 features, in order):
+      1. RRInterval
+      2. HRV
+      3. QRSDuration
+      4. QTInterval
+      5. STSegment
+      6. PRInterval
+      7. PAmplitude
+      8. RAmplitude
+      9. TAmplitude
+   Missingness Indicators (6 binary flags, in order):
+     10. P_Valid
+     11. PR_Valid
+     12. QRS_Valid
+     13. ST_Valid
+     14. QT_Valid
+     15. Baseline_Valid
+   Total Features in Final Model Input Vector: 15 features.
+   Excluded from Model Input Matrix (10 columns): Record, Subject_ID, Partition, Sample_Idx, R_Time, Annotation_Symbol, AAMI_Class, HeartRate, HRV_K5_Old, Label
+
+3. PRE-IMPUTATION VALIDATION CHECKS (Train_Dev partition):
+   Feature        | Valid Count  | Missing Count  | Missing %  | Train Median | Status
+--------------------------------------------------------------------------------
+   RRInterval     |     66,679   |            0   |     0.00% |     0.7333   | PASS (None entirely missing)
+   HRV            |     66,617   |           62   |     0.09% |     0.0413   | PASS (None entirely missing)
+   QRSDuration    |     63,092   |        3,587   |     5.38% |     0.1444   | PASS (None entirely missing)
+   QTInterval     |     58,918   |        7,761   |    11.64% |     0.3083   | PASS (None entirely missing)
+   STSegment      |     51,434   |       15,245   |    22.86% |    -0.0514   | PASS (None entirely missing)
+   PRInterval     |     42,615   |       24,064   |    36.09% |     0.1472   | PASS (None entirely missing)
+   PAmplitude     |     31,629   |       35,050   |    52.57% |     0.1219   | PASS (None entirely missing)
+   RAmplitude     |     66,679   |            0   |     0.00% |     1.5468   | PASS (None entirely missing)
+   TAmplitude     |     48,428   |       18,251   |    27.37% |     0.1898   | PASS (None entirely missing)
+
+   Validating 6 Binary Missingness Indicators in Train_Dev & Validation:
+     * P_Valid         : Train_Dev unique=[np.int64(0), np.int64(1)] (0 NaNs) | Validation unique=[np.int64(0), np.int64(1)] (0 NaNs) -> PASS
+     * PR_Valid        : Train_Dev unique=[np.int64(0), np.int64(1)] (0 NaNs) | Validation unique=[np.int64(0), np.int64(1)] (0 NaNs) -> PASS
+     * QRS_Valid       : Train_Dev unique=[np.int64(0), np.int64(1)] (0 NaNs) | Validation unique=[np.int64(0), np.int64(1)] (0 NaNs) -> PASS
+     * ST_Valid        : Train_Dev unique=[np.int64(0), np.int64(1)] (0 NaNs) | Validation unique=[np.int64(0), np.int64(1)] (0 NaNs) -> PASS
+     * QT_Valid        : Train_Dev unique=[np.int64(0), np.int64(1)] (0 NaNs) | Validation unique=[np.int64(0), np.int64(1)] (0 NaNs) -> PASS
+     * Baseline_Valid  : Train_Dev unique=[np.int64(0), np.int64(1)] (0 NaNs) | Validation unique=[np.int64(0), np.int64(1)] (0 NaNs) -> PASS
+
+--------------------------------------------------------------------------------
+4. SIMPLE IMPUTER (STRATEGY = 'MEDIAN') FITTING ON TRAIN_DEV
+--------------------------------------------------------------------------------
+   Algorithm: sklearn.impute.SimpleImputer(strategy='median')
+   Fitting scope: Strictly df_train[NUMERICAL_FEATURES] (66,679 rows)
+
+   Fitted Imputer Statistics vs Pandas Medians:
+     * RRInterval    : SimpleImputer =     0.7333 | Pandas Median =     0.7333 | Diff = 0.000000
+     * HRV           : SimpleImputer =     0.0413 | Pandas Median =     0.0413 | Diff = 0.000000
+     * QRSDuration   : SimpleImputer =     0.1444 | Pandas Median =     0.1444 | Diff = 0.000000
+     * QTInterval    : SimpleImputer =     0.3083 | Pandas Median =     0.3083 | Diff = 0.000000
+     * STSegment     : SimpleImputer =    -0.0514 | Pandas Median =    -0.0514 | Diff = 0.000000
+     * PRInterval    : SimpleImputer =     0.1472 | Pandas Median =     0.1472 | Diff = 0.000000
+     * PAmplitude    : SimpleImputer =     0.1219 | Pandas Median =     0.1219 | Diff = 0.000000
+     * RAmplitude    : SimpleImputer =     1.5468 | Pandas Median =     1.5468 | Diff = 0.000000
+     * TAmplitude    : SimpleImputer =     0.1898 | Pandas Median =     0.1898 | Diff = 0.000000
+
+   [PASS] Zero NaNs remain post-imputation in Train_Dev ((66679, 9)) and Validation ((15349, 9)).
+     * Non-zero verification for 'HRV': 62 NaNs replaced with exact median 0.0413 (Max diff: 0.000000)
+     * Non-zero verification for 'QRSDuration': 3,587 NaNs replaced with exact median 0.1444 (Max diff: 0.000000)
+     * Non-zero verification for 'QTInterval': 7,761 NaNs replaced with exact median 0.3083 (Max diff: 0.000000)
+     * Non-zero verification for 'STSegment': 15,245 NaNs replaced with exact median -0.0514 (Max diff: 0.000000)
+     * Non-zero verification for 'PRInterval': 24,064 NaNs replaced with exact median 0.1472 (Max diff: 0.000000)
+     * Non-zero verification for 'PAmplitude': 35,050 NaNs replaced with exact median 0.1219 (Max diff: 0.000000)
+     * Non-zero verification for 'TAmplitude': 18,251 NaNs replaced with exact median 0.1898 (Max diff: 0.000000)
+
+--------------------------------------------------------------------------------
+5. STANDARD SCALER FITTING ON IMPUTED TRAIN_DEV NUMERICAL FEATURES
+--------------------------------------------------------------------------------
+   MATHEMATICAL SPECIFICATION:
+   sklearn.preprocessing.StandardScaler computes POPULATION variance (ddof=0, denominator N):
+     mu_j    = (1 / N) * sum_{i=1}^N X_{i,j}
+     sigma_j = sqrt( (1 / N) * sum_{i=1}^N (X_{i,j} - mu_j)^2 )
+     Z_{i,j} = (X_{i,j} - mu_j) / sigma_j
+
+   DISTINCTION BETWEEN POPULATION (ddof=0) AND SAMPLE (ddof=1) STANDARD DEVIATION:
+     - HRV calculation in Stages 3-4 uses SAMPLE standard deviation (ddof=1, denominator M - 1, Bessel's correction)
+       because K=10 is a small local sample of heartbeats.
+     - StandardScaler uses POPULATION standard deviation (ddof=0, denominator N) across the complete training partition.
+       At N = 66,679, sqrt(N / (N - 1)) = sqrt(66679 / 66678) = 1.0000075 (a relative difference of 0.00075%).
+     - We use sklearn's standard population variance implementation without manual modification.
+
+   Fitted Scaler Parameters (strictly on Train_Dev):
+   Feature        | Mean (mu)      | Scale (sigma, ddof=0)  | Variance (sigma^2)
+--------------------------------------------------------------------------------
+   RRInterval     |     0.774351 |           0.227612     |         0.051807
+   HRV            |     0.097036 |           0.128589     |         0.016535
+   QRSDuration    |     0.153529 |           0.054103     |         0.002927
+   QTInterval     |     0.312419 |           0.057723     |         0.003332
+   STSegment      |    -0.053112 |           0.158521     |         0.025129
+   PRInterval     |     0.148668 |           0.019667     |         0.000387
+   PAmplitude     |     0.121495 |           0.040790     |         0.001664
+   RAmplitude     |     1.522523 |           0.846863     |         0.717177
+   TAmplitude     |     0.159900 |           0.367650     |         0.135166
+
+--------------------------------------------------------------------------------
+6. TRANSFORMED FEATURE INTEGRITY & ZERO-LEAKAGE VERIFICATION
+--------------------------------------------------------------------------------
+   Train_Dev Numerical Standardization Verification (Target: mu ~ 0.0, sigma ~ 1.0):
+     * RRInterval    : Population Mean =  0.00000000 | Pop Std (ddof=0) = 1.00000000 | Sample Std (ddof=1) = 1.00000750
+     * HRV           : Population Mean =  0.00000000 | Pop Std (ddof=0) = 1.00000000 | Sample Std (ddof=1) = 1.00000750
+     * QRSDuration   : Population Mean = -0.00000000 | Pop Std (ddof=0) = 1.00000000 | Sample Std (ddof=1) = 1.00000750
+     * QTInterval    : Population Mean =  0.00000000 | Pop Std (ddof=0) = 1.00000000 | Sample Std (ddof=1) = 1.00000750
+     * STSegment     : Population Mean =  0.00000000 | Pop Std (ddof=0) = 1.00000000 | Sample Std (ddof=1) = 1.00000750
+     * PRInterval    : Population Mean = -0.00000000 | Pop Std (ddof=0) = 1.00000000 | Sample Std (ddof=1) = 1.00000750
+     * PAmplitude    : Population Mean =  0.00000000 | Pop Std (ddof=0) = 1.00000000 | Sample Std (ddof=1) = 1.00000750
+     * RAmplitude    : Population Mean = -0.00000000 | Pop Std (ddof=0) = 1.00000000 | Sample Std (ddof=1) = 1.00000750
+     * TAmplitude    : Population Mean = -0.00000000 | Pop Std (ddof=0) = 1.00000000 | Sample Std (ddof=1) = 1.00000750
+   [PASS] Train_Dev numerical features strictly standardized to population mean 0.000 and population std 1.000.
+
+   Validation Out-of-Sample Verification (Proves Zero Leakage from Validation):
+     * RRInterval    : Val Pop Mean =    0.155291 | Val Pop Std (ddof=0) = 0.930255
+     * HRV           : Val Pop Mean =    0.160503 | Val Pop Std (ddof=0) = 0.697325
+     * QRSDuration   : Val Pop Mean =   -0.126498 | Val Pop Std (ddof=0) = 1.055884
+     * QTInterval    : Val Pop Mean =    0.241479 | Val Pop Std (ddof=0) = 1.351455
+     * STSegment     : Val Pop Mean =    0.120834 | Val Pop Std (ddof=0) = 1.100457
+     * PRInterval    : Val Pop Mean =    0.025987 | Val Pop Std (ddof=0) = 1.459117
+     * PAmplitude    : Val Pop Mean =   -0.264005 | Val Pop Std (ddof=0) = 1.116842
+     * RAmplitude    : Val Pop Mean =   -0.268756 | Val Pop Std (ddof=0) = 0.942806
+     * TAmplitude    : Val Pop Mean =   -0.222788 | Val Pop Std (ddof=0) = 1.008510
+   [PASS] Validation statistics naturally differ from 0 and 1, confirming out-of-sample transformation.
+
+--------------------------------------------------------------------------------
+7. SCALER PURPOSE & ARCHITECTURAL DOCUMENTATION
+--------------------------------------------------------------------------------
+   * Random Forest Scale-Invariance:
+     Decision tree ensembles (Random Forest, Extra Trees, Gradient Boosting) rely strictly on
+     rank-order thresholds (e.g. x_j <= threshold). They are mathematically invariant to monotonic
+     affine transformations such as z = (x - mu) / sigma.
+   * Why StandardScaler is Preserved in the Production Pipeline:
+     1. Algorithmic Comparability: Enables benchmark comparisons against scale-sensitive models
+        (Logistic Regression, Support Vector Machines, Neural Networks).
+     2. Production Modularity: Encapsulates all preprocessing into a clean, reusable Scikit-Learn
+        Pipeline object that guarantees identical input shapes across training and deployment.
+     3. Numerical Stability: Prevents large amplitude features (e.g. R-peak at 3.5 mV) from
+        causing floating-point precision differences when comparing multi-lead visualizations.
+
+--------------------------------------------------------------------------------
+8. FOUR-WAY EXPERIMENTAL MATRIX SHAPES PREVIEW
+--------------------------------------------------------------------------------
+   Experiment A (Timing-Only, 2 features)            : Train shape = (66679, 2) | Val shape = (15349, 2)
+   Experiment B (Morphology-Only, 7 features)        : Train shape = (66679, 7) | Val shape = (15349, 7)
+   Experiment C (Combined No Indicators, 9 features) : Train shape = (66679, 9) | Val shape = (15349, 9)
+   Experiment D (Combined With Indicators, 15 feat)  : Train shape = (66679, 15) | Val shape = (15349, 15)
+
+   Verifying Experiment D Indicator Blocks:
+     * Train_Dev indicators block: min=0.0, max=1.0, unique=[0. 1.]
+     * Validation indicators block: min=0.0, max=1.0, unique=[0. 1.]
+     [PASS] All 6 binary missingness indicators remain strictly unscaled {0, 1}.
+
+--------------------------------------------------------------------------------
+9. SERIALIZATION & PARAMETER AUDIT DELIVERABLES
+--------------------------------------------------------------------------------
+   Saved fitted imputer: C:\Users\srjas\OneDrive\Desktop\ECG FINAL PROJ\models\ecg_feature_imputer.pkl
+   Saved fitted imputer: C:\Users\srjas\OneDrive\Desktop\ECG FINAL PROJ\04_machine_learning\models\ecg_feature_imputer.pkl
+   Saved fitted scaler : C:\Users\srjas\OneDrive\Desktop\ECG FINAL PROJ\models\ecg_feature_scaler.pkl
+   Saved fitted scaler : C:\Users\srjas\OneDrive\Desktop\ECG FINAL PROJ\04_machine_learning\models\ecg_feature_scaler.pkl
+
+   Saved parameter audit CSV: C:\Users\srjas\OneDrive\Desktop\ECG FINAL PROJ\05_results\stage5_scaler_parameters.csv

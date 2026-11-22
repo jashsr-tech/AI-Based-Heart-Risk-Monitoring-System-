@@ -1,0 +1,146 @@
+=====================================================================================
+ECG FINAL PRO — STAGE 8: PATIENT-GROUPED K-FOLD CROSS-VALIDATION
+5-Fold GroupKFold | Zero Leakage Preprocessing | Dual Reporting | OOF Pooling
+Execution Timestamp: 2026-10-31 02:31:23
+=====================================================================================
+
+1. DATASET LOADING & STRICT ISOLATION AUDIT:
+   Source Path: C:\Users\srjas\OneDrive\Desktop\ECG FINAL PROJ\04_machine_learning\mitbih_development_dataset.csv
+   Total rows loaded from development file: 82,028 beats.
+   Partitions present in development file: ['Train_Dev', 'Validation']
+   [ISOLATION CERTIFIED] Independent_Test is physically absent from development dataset.
+   Train_Dev cohort filtered: 66,679 beats, 30 subjects.
+   Validation partition held completely separate: 15,349 beats, 7 subjects.
+
+2. AUTOMATED PRE-TRAINING INTEGRITY VERIFICATION SUITE:
+   [CHECK 1 PASSED] Unique beat identifier (Record + Sample_Idx) verified: 66,679 globally unique IDs.
+   [CHECK 2 PASSED] Target labels verified: Class 0 (AAMI N) = 60,034 (90.03%), Class 1 (S, V, F) = 6,645 (9.97%).
+
+   Verifying GroupKFold 5-Fold Partition Assignments:
+     * Fold 1: Confirmed Subject_201_202 intact with Records 201 and 202 co-assigned.
+     * Fold 1: 5 subjects, 12,748 beats, Class 0 = 10,290, Class 1 = 2,458 (19.28%).
+     * Fold 2: 6 subjects, 13,818 beats, Class 0 = 12,233, Class 1 = 1,585 (11.47%).
+     * Fold 3: 6 subjects, 13,809 beats, Class 0 = 12,735, Class 1 = 1,074 (7.78%).
+     * Fold 4: 7 subjects, 12,473 beats, Class 0 = 11,479, Class 1 = 994 (7.97%).
+     * Fold 5: 6 subjects, 13,831 beats, Class 0 = 13,297, Class 1 = 534 (3.86%).
+   [CHECK 3 PASSED] All 5 folds disjoint, zero subject overlap, bipolar class presence verified.
+   [CHECK 4 PASSED] Exactly 66,679 beats mapped to exactly one held-out fold.
+   [CHECK 5 PASSED] Documented fold census verified with 100% fidelity.
+
+   [RESUME CHECK] Complete out-of-fold predictions and fold metrics already verified on disk.
+   [RESUME CHECK] Loading 40 completed model runs directly to finalize summary, comparisons, and plots.
+
+=====================================================================================
+5. PARADIGM A: FOLD-WISE STATISTICAL SUMMARY (N = 5 Folds, Equal Patient Weighting):
+=====================================================================================
+   Saved summary metrics table to: C:\Users\srjas\OneDrive\Desktop\ECG FINAL PROJ\05_results\stage8_group_cv_summary.csv
+
+Model Key                           | Bal Acc (Mean+/-Std) | Sens (Mean+/-Std)    | Prec (Mean+/-Std)    | F1 (Mean+/-Std)      | AP (Mean+/-Std)   
+----------------------------------------------------------------------------------------------------------------------------------------------------
+Exp_A_Timing_Only_Balanced          | 79.61+/-11.08%       | 69.12+/-21.08%       | 42.80+/-8.36%       | 51.11+/-9.08%       | 0.5294+/-0.2229
+Exp_A_Timing_Only_Unweighted        | 66.64+/-11.46%       | 36.06+/-21.60%       | 61.82+/-22.11%       | 44.26+/-21.47%       | 0.5500+/-0.2157
+Exp_B_Morphology_Only_Balanced      | 74.50+/-9.09%       | 68.54+/-14.73%       | 28.92+/-20.71%       | 38.05+/-17.66%       | 0.4526+/-0.2214
+Exp_B_Morphology_Only_Unweighted    | 68.56+/-12.97%       | 42.29+/-28.31%       | 46.90+/-17.96%       | 36.84+/-21.93%       | 0.4597+/-0.2250
+Exp_C_Combined_No_Indicators_Balanced | 81.40+/-11.52%       | 72.71+/-26.12%       | 45.24+/-13.28%       | 51.29+/-8.36%       | 0.7144+/-0.1143
+Exp_C_Combined_No_Indicators_Unweighted | 78.52+/-13.99%       | 59.98+/-29.02%       | 68.08+/-19.24%       | 57.90+/-18.53%       | 0.7282+/-0.1418
+Exp_D_Combined_With_Indicators_Balanced | 80.34+/-12.16%       | 71.24+/-24.80%       | 41.74+/-10.52%       | 49.39+/-8.27%       | 0.7164+/-0.0913
+Exp_D_Combined_With_Indicators_Unweighted | 74.88+/-14.22%       | 53.41+/-29.62%       | 63.62+/-21.47%       | 50.81+/-17.50%       | 0.7164+/-0.1094
+
+=====================================================================================
+6. PARADIGM B: POOLED OUT-OF-FOLD GLOBAL EVALUATION (N = 66,679 Beats):
+=====================================================================================
+   Saved pooled metrics table to: C:\Users\srjas\OneDrive\Desktop\ECG FINAL PROJ\05_results\stage8_group_cv_pooled_metrics.csv
+
+Model Key                           | TN     FP     FN     TP     | Bal Acc   Sens      Spec      Prec      F1        ROC-AUC   AP      
+----------------------------------------------------------------------------------------------------------------------------------------
+Exp_A_Timing_Only_Balanced          | 54257  5777   2634   4011   |  75.37%  60.36%  90.38%  40.98%  48.82%  0.8541  0.4472
+Exp_A_Timing_Only_Unweighted        | 58480  1554   4591   2054   |  64.16%  30.91%  97.41%  56.93%  40.07%  0.8691  0.4649
+Exp_B_Morphology_Only_Balanced      | 48168  11866  2127   4518   |  74.11%  67.99%  80.23%  27.58%  39.24%  0.8421  0.3702
+Exp_B_Morphology_Only_Unweighted    | 56815  3219   4469   2176   |  63.69%  32.75%  94.64%  40.33%  36.15%  0.8246  0.3752
+Exp_C_Combined_No_Indicators_Balanced | 54074  5960   2403   4242   |  76.95%  63.84%  90.07%  41.58%  50.36%  0.8861  0.6063
+Exp_C_Combined_No_Indicators_Unweighted | 58263  1771   3273   3372   |  73.90%  50.74%  97.05%  65.56%  57.21%  0.8767  0.5988
+Exp_D_Combined_With_Indicators_Balanced | 53704  6330   2561   4084   |  75.46%  61.46%  89.46%  39.22%  47.88%  0.9007  0.6129
+Exp_D_Combined_With_Indicators_Unweighted | 57818  2216   3754   2891   |  69.91%  43.51%  96.31%  56.61%  49.20%  0.8976  0.5993
+
+=====================================================================================
+7. DEDICATED INVESTIGATION: EXPERIMENT C VS EXPERIMENT D (INDICATOR IMPACT):
+=====================================================================================
+   Saved Exp C vs D comparison table to: C:\Users\srjas\OneDrive\Desktop\ECG FINAL PROJ\05_results\stage8_group_cv_exp_c_vs_d_comparison.csv
+
+   Paired Delta Summary: Experiment D (With Indicators) minus Experiment C (No Indicators):
+Weighting    | Scope      | Delta Bal Acc | Delta Sens  | Delta Prec  | Delta F1    | Delta ROC-AUC | Delta AP  
+----------------------------------------------------------------------------------------------------------------
+Balanced     | Fold_1     |   -0.15%     |   +1.10%   |   -4.71%   |   -0.42%   |  +0.0393     | +0.0792
+Balanced     | Fold_2     |   -7.87%     |  -16.28%   |   -4.05%   |   -6.85%   |  -0.0382     | -0.0696
+Balanced     | Fold_3     |   +1.85%     |   +5.59%   |   -8.62%   |   -2.56%   |  -0.0066     | -0.0319
+Balanced     | Fold_4     |   -0.30%     |   +0.20%   |   -1.55%   |   -1.50%   |  +0.0010     | +0.0311
+Balanced     | Fold_5     |   +1.18%     |   +2.06%   |   +1.45%   |   +1.84%   |  +0.0065     | +0.0009
+Balanced     | Pooled_OOF |   -1.50%     |   -2.38%   |   -2.36%   |   -2.48%   |  +0.0146     | +0.0067
+Unweighted   | Fold_1     |   -0.65%     |   -1.67%   |   +1.19%   |   -1.85%   |  +0.0523     | +0.1188
+Unweighted   | Fold_2     |  -12.08%     |  -20.19%   |  -23.88%   |  -22.26%   |  -0.0501     | -0.1327
+Unweighted   | Fold_3     |   -4.82%     |   -9.68%   |   -0.30%   |  -10.57%   |  -0.0262     | -0.0814
+Unweighted   | Fold_4     |   -0.77%     |   -1.91%   |   +2.12%   |   +0.40%   |  +0.0019     | +0.0133
+Unweighted   | Fold_5     |   +0.12%     |   +0.56%   |   -1.41%   |   -1.16%   |  +0.0066     | +0.0232
+Unweighted   | Pooled_OOF |   -3.99%     |   -7.24%   |   -8.96%   |   -8.01%   |  +0.0209     | +0.0005
+
+=====================================================================================
+8. COMPARATIVE ANALYSIS: STAGE 8 CROSS-VALIDATION VS STAGE 7 VALIDATION:
+=====================================================================================
+   [EXPERIMENTAL CONDITION DISCLOSURE]
+   * Stage 7: Models trained on all 30 Train_Dev subjects (66,679 beats) and evaluated on 7 Validation subjects (15,349 beats).
+   * Stage 8: Models trained on ~24 subjects (~53,000 beats) and evaluated on 5-7 held-out subjects (~13,000 beats) per fold.
+   Saved Stage 8 vs Stage 7 comparison table to: C:\Users\srjas\OneDrive\Desktop\ECG FINAL PROJ\05_results\stage8_group_cv_vs_stage7_comparison.csv
+
+Model Key                           | Metric     | Stage 7 Val  | Stage 8 CV Mean  | Stage 8 OOF Pool | Delta (CV - Val)
+------------------------------------------------------------------------------------------------------------------------
+Exp_A_Timing_Only_Balanced          | Bal Acc    |  86.74%     |  79.61%         |  75.37%         |  -7.13%
+                                    | Sens       |  87.16%     |  69.12%         |  60.36%         | -18.04%
+                                    | F1         |  63.08%     |  51.11%         |  48.82%         | -11.97%
+                                    | AP         | 0.5436      | 0.5294          | 0.4472          | -0.0142
+------------------------------------------------------------------------------------------------------------------------
+Exp_B_Morphology_Only_Balanced      | Bal Acc    |  63.63%     |  74.50%         |  74.11%         | +10.87%
+                                    | Sens       |  58.73%     |  68.54%         |  67.99%         |  +9.81%
+                                    | F1         |  32.26%     |  38.05%         |  39.24%         |  +5.79%
+                                    | AP         | 0.2868      | 0.4526          | 0.3702          | +0.1658
+------------------------------------------------------------------------------------------------------------------------
+Exp_C_Combined_No_Indicators_Balanced | Bal Acc    |  79.95%     |  81.40%         |  76.95%         |  +1.45%
+                                    | Sens       |  78.48%     |  72.71%         |  63.84%         |  -5.77%
+                                    | F1         |  52.38%     |  51.29%         |  50.36%         |  -1.09%
+                                    | AP         | 0.5111      | 0.7144          | 0.6063          | +0.2033
+------------------------------------------------------------------------------------------------------------------------
+Exp_D_Combined_With_Indicators_Balanced | Bal Acc    |  81.27%     |  80.34%         |  75.46%         |  -0.93%
+                                    | Sens       |  79.85%     |  71.24%         |  61.46%         |  -8.61%
+                                    | F1         |  54.54%     |  49.39%         |  47.88%         |  -5.15%
+                                    | AP         | 0.5842      | 0.7164          | 0.6129          | +0.1322
+------------------------------------------------------------------------------------------------------------------------
+
+9. GENERATING DIAGNOSTIC VISUALIZATIONS:
+   Saved fold-distribution boxplots to: C:\Users\srjas\OneDrive\Desktop\ECG FINAL PROJ\05_results\stage8_group_cv_boxplots.png
+   Saved benchmark comparison chart to: C:\Users\srjas\OneDrive\Desktop\ECG FINAL PROJ\05_results\stage8_group_cv_comparison.png
+
+10. WRITING COMPREHENSIVE TECHNICAL REPORT...
+
+=====================================================================================
+11. METHODOLOGICAL ADDENDUM & FORMAL DOCUMENTATION CORRECTIONS:
+=====================================================================================
+1. Metric Terminology:
+   - 'Global Calibration Gain' is formally corrected to 'Improved Discrimination/Ranking Performance'.
+   - Average Precision (AP) measures minority-class (Class 1) ranking performance in precision-recall space.
+     It does not evaluate probability calibration (e.g., Brier score or calibration curves).
+2. Class Label Definitions:
+   - Class 0 is defined as the 'selected AAMI N group' (including normal sinus N, bundle branch blocks L and R,
+     and escape mechanisms e and j). It must not be described exclusively as normal sinus beats.
+   - Class 1 is defined as 'selected non-normal beat classes' (SVEB, VEB, and fusion F).
+3. Inter-Patient Variance & Morphology Hypotheses:
+   - Fold-to-fold performance variations (e.g. Sensitivity swings from 32.14% in Fold 1 to 85.49% in Fold 2)
+     demonstrate high inter-patient heterogeneity.
+   - Any discussion regarding PVC morphology differences, late-cycle coupling, or bundle branch conduction delays
+     is recognized strictly as a set of possible hypotheses requiring further morphological investigation,
+     not established clinical findings. Generalization must not be overstated.
+4. Statistical Distinction:
+   - Fold-Wise Mean (N = 5): Unweighted arithmetic mean across folds, weighting each patient fold equally.
+   - Pooled Out-of-Fold (N = 66,679): Sample-weighted global evaluation, weighting every heartbeat equally.
+
+=====================================================================================
+END OF STAGE 8 TECHNICAL AUDIT & CROSS-VALIDATION REPORT
+=====================================================================================

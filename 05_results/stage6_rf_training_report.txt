@@ -1,0 +1,45 @@
+========================================================================
+ECG FINAL PRO — STAGE 6: RANDOM FOREST TRAINING & ARCHITECTURE
+========================================================================
+Training Set: 41,472 beats across 38 records.
+Feature Count: 10
+
+Random Forest Architecture Parameters:
+  - n_estimators      : 150
+  - max_depth         : 12
+  - min_samples_split : 10
+  - min_samples_leaf  : 4
+  - max_features      : sqrt
+  - class_weight      : balanced
+  - oob_score         : True
+  - random_state      : 42
+  - n_jobs            : -1
+
+Training Random Forest ensemble...
+
+------------------------------------------------------------------------
+TRAINING CONVERGENCE & OOB RESULTS
+------------------------------------------------------------------------
+  Number of Trees Fitted : 150
+  Training Set Accuracy  : 99.92%
+  Out-of-Bag (OOB) Score : 99.76%
+
+Random Forest Feature Importances (Gini):
+   1. HRV           :  43.66%
+   2. QTInterval    :  11.96%
+   3. HeartRate     :   8.29%
+   4. QRSDuration   :   8.09%
+   5. RRInterval    :   7.59%
+   6. PRInterval    :   7.19%
+   7. RAmplitude    :   6.04%
+   8. STSegment     :   2.58%
+   9. PAmplitude    :   2.38%
+  10. TAmplitude    :   2.23%
+[PASS] Balanced feature utilization achieved (highest single feature is 43.66%).
+
+Saved candidate Random Forest model to: C:\Users\srjas\OneDrive\Desktop\ECG FINAL PROJ\05_results\stage6_candidate_random_forest.pkl
+
+========================================================================
+STAGE 6 RESULT: PASSED
+Random Forest trained successfully. Ready for Stage 7 (Cross-Validation).
+========================================================================

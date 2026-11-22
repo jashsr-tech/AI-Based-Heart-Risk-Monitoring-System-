@@ -1,0 +1,34 @@
+{
+  "model_type": "DecisionTreeClassifier",
+  "max_depth": 10,
+  "train_accuracy": 0.9951774691358025,
+  "test_accuracy": 0.5426383571179951,
+  "generalization_gap": 0.4525391120178074,
+  "balanced_accuracy": 0.5389656780207306,
+  "sensitivity_recall": 0.8404401650618982,
+  "specificity": 0.23749119097956306,
+  "precision": 0.5303819444444444,
+  "f1_score": 0.650345928685471,
+  "confusion_matrix": [
+    [
+      1348,
+      4328
+    ],
+    [
+      928,
+      4888
+    ]
+  ],
+  "feature_importances": {
+    "HeartRate": 0.03265446367818616,
+    "RRInterval": 0.058680660686304585,
+    "PRInterval": 0.01935771469126293,
+    "QRSDuration": 0.02593203553341135,
+    "QTInterval": 0.16135839705285096,
+    "STSegment": 0.0010353097606906002,
+    "HRV": 0.6851379953306901,
+    "PAmplitude": 0.0008500604419886985,
+    "RAmplitude": 0.012506275388238588,
+    "TAmplitude": 0.0024870874363760245
+  }
+}

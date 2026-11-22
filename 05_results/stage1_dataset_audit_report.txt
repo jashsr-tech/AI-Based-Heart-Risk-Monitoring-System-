@@ -1,0 +1,37 @@
+========================================================================
+ECG FINAL PRO — STAGE 1: DATASET VERIFICATION & SCHEMA AUDIT
+========================================================================
+Target Dataset: C:\Users\srjas\OneDrive\Desktop\ECG FINAL PROJ\04_machine_learning\ecg_features_balanced_clean_labeled.csv
+[PASS] Dataset file exists.
+[PASS] Loaded CSV successfully. Total Rows: 52,964, Total Columns: 14
+[PASS] All 14 expected columns are present.
+[PASS] All feature and label columns are fully numeric with zero missing values.
+[PASS] Zero infinite values detected across all features.
+
+Target Labels present: [0, 1]
+  - Label 0 (NORMAL)  : 26,482 beats (50.00%)
+  - Label 1 (ABNORMAL): 26,482 beats (50.00%)
+
+Conditions Breakdown:
+                                          Normal (0)  Abnormal (1)
+Condition                                                         
+Atrial Fibrillation                                0          3073
+Atrial Fibrillation + PVC                          0          1247
+Bundle Branch Block                                0          5167
+Left Bundle Branch Block                           0           953
+Normal Sinus Rhythm                            26482             0
+Normal with occasional PVC                         0           814
+Premature Ventricular Contractions (PVC)           0          9894
+Right Bundle Branch Block                          0           984
+Ventricular Ectopy                                 0          4350
+
+Patient / Record Counts:
+  - Unique Records: 48
+  - Records with mixed labels: 0
+  - Records with purely Normal beats (0): 13 -> [100, 101, 103, 105, 109, 111, 112, 113, 115, 121, 122, 123, 124]
+  - Records with purely Abnormal beats (1): 35 -> [102, 104, 106, 107, 108, 114, 116, 117, 118, 119, 200, 201, 202, 203, 205, 207, 208, 209, 210, 212, 213, 214, 215, 217, 219, 220, 221, 222, 223, 228, 230, 231, 232, 233, 234]
+
+========================================================================
+STAGE 1 RESULT: PASSED
+Dataset verified and certified ready for Stage 2 (Feature Validation).
+========================================================================

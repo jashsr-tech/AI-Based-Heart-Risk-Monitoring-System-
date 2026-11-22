@@ -1,0 +1,29 @@
+Experiment_ID,Experiment_Name,Metric_Name,Decision_Tree_Value,Random_Forest_Value,Delta_RF_minus_DT
+Exp_A_Timing_Only,Timing_Only,Accuracy,0.8334,0.8644,0.030999999999999917
+Exp_A_Timing_Only,Timing_Only,Balanced Acc,0.8674,0.8674,0.0
+Exp_A_Timing_Only,Timing_Only,Sens (C1),0.9137,0.8716,-0.042099999999999915
+Exp_A_Timing_Only,Timing_Only,Prec (C1),0.4391,0.4943,0.05520000000000003
+Exp_A_Timing_Only,Timing_Only,F1 (C1),0.5932,0.6308,0.03760000000000008
+Exp_A_Timing_Only,Timing_Only,Average Prec (AP),0.5297,0.5436,0.013900000000000023
+Exp_A_Timing_Only,Timing_Only,ROC-AUC,0.8926,0.9234,0.03080000000000005
+Exp_B_Morphology_Only,Morphology_Only,Accuracy,0.6345,0.6722,0.03770000000000007
+Exp_B_Morphology_Only,Morphology_Only,Balanced Acc,0.5857,0.6363,0.05059999999999998
+Exp_B_Morphology_Only,Morphology_Only,Sens (C1),0.5191,0.5873,0.06820000000000004
+Exp_B_Morphology_Only,Morphology_Only,Prec (C1),0.1862,0.2224,0.03619999999999998
+Exp_B_Morphology_Only,Morphology_Only,F1 (C1),0.2741,0.3226,0.04849999999999999
+Exp_B_Morphology_Only,Morphology_Only,Average Prec (AP),0.223,0.2868,0.0638
+Exp_B_Morphology_Only,Morphology_Only,ROC-AUC,0.647,0.7228,0.07579999999999998
+Exp_C_Combined_No_Indicators,Combined_No_Indicators,Accuracy,0.7495,0.8103,0.060799999999999965
+Exp_C_Combined_No_Indicators,Combined_No_Indicators,Balanced Acc,0.7074,0.7995,0.09209999999999996
+Exp_C_Combined_No_Indicators,Combined_No_Indicators,Sens (C1),0.65,0.7848,0.13480000000000003
+Exp_C_Combined_No_Indicators,Combined_No_Indicators,Prec (C1),0.2975,0.3931,0.09560000000000002
+Exp_C_Combined_No_Indicators,Combined_No_Indicators,F1 (C1),0.4082,0.5238,0.11560000000000004
+Exp_C_Combined_No_Indicators,Combined_No_Indicators,Average Prec (AP),0.4054,0.5111,0.10570000000000002
+Exp_C_Combined_No_Indicators,Combined_No_Indicators,ROC-AUC,0.8206,0.8832,0.06259999999999999
+Exp_D_Combined_With_Indicators,Combined_With_Indicators,Accuracy,0.7833,0.8231,0.03980000000000006
+Exp_D_Combined_With_Indicators,Combined_With_Indicators,Balanced Acc,0.819,0.8127,-0.006299999999999972
+Exp_D_Combined_With_Indicators,Combined_With_Indicators,Sens (C1),0.8676,0.7985,-0.06910000000000005
+Exp_D_Combined_With_Indicators,Combined_With_Indicators,Prec (C1),0.3668,0.4141,0.04730000000000001
+Exp_D_Combined_With_Indicators,Combined_With_Indicators,F1 (C1),0.5156,0.5454,0.02980000000000005
+Exp_D_Combined_With_Indicators,Combined_With_Indicators,Average Prec (AP),0.5049,0.5842,0.07930000000000004
+Exp_D_Combined_With_Indicators,Combined_With_Indicators,ROC-AUC,0.8562,0.8853,0.029100000000000015

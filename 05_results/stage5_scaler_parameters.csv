@@ -1,0 +1,16 @@
+Feature_Index,Feature_Name,Feature_Type,Train_Dev_Median_Impute,Scaler_Mean_Mu,Scaler_Std_Sigma_Pop,Scaler_Variance_Pop,Missing_Pct_Train_Dev,Missing_Pct_Validation
+1,RRInterval,Numerical,0.7333,0.774351,0.227612,0.051807,0.0,0.0
+2,HRV,Numerical,0.0413,0.097036,0.128589,0.016535,0.09,0.09
+3,QRSDuration,Numerical,0.1444,0.153529,0.054103,0.002927,5.38,9.06
+4,QTInterval,Numerical,0.3083,0.312419,0.057723,0.003332,11.64,11.63
+5,STSegment,Numerical,-0.0514,-0.053112,0.158521,0.025129,22.86,18.16
+6,PRInterval,Numerical,0.1472,0.148668,0.019667,0.000387,36.09,39.97
+7,PAmplitude,Numerical,0.1219,0.121495,0.04079,0.001664,52.57,49.67
+8,RAmplitude,Numerical,1.5468,1.522523,0.846863,0.717177,0.0,0.0
+9,TAmplitude,Numerical,0.1898,0.1599,0.36765,0.135166,27.37,23.65
+10,P_Valid,Missingness_Indicator,N/A (Binary 0/1),N/A (Unscaled),N/A (Unscaled),N/A (Unscaled),0.0,0.0
+11,PR_Valid,Missingness_Indicator,N/A (Binary 0/1),N/A (Unscaled),N/A (Unscaled),N/A (Unscaled),0.0,0.0
+12,QRS_Valid,Missingness_Indicator,N/A (Binary 0/1),N/A (Unscaled),N/A (Unscaled),N/A (Unscaled),0.0,0.0
+13,ST_Valid,Missingness_Indicator,N/A (Binary 0/1),N/A (Unscaled),N/A (Unscaled),N/A (Unscaled),0.0,0.0
+14,QT_Valid,Missingness_Indicator,N/A (Binary 0/1),N/A (Unscaled),N/A (Unscaled),N/A (Unscaled),0.0,0.0
+15,Baseline_Valid,Missingness_Indicator,N/A (Binary 0/1),N/A (Unscaled),N/A (Unscaled),N/A (Unscaled),0.0,0.0

@@ -1,0 +1,55 @@
+========================================================================
+ECG FINAL PRO — STAGE 8: INDEPENDENT TEST SET EVALUATION
+========================================================================
+Independent Test Set: 11,492 beats across 10 records.
+Test Normal records   : [100, 113, 124]
+Test Abnormal records : [104, 108, 118, 213, 220, 223, 233]
+
+------------------------------------------------------------------------
+RANDOM FOREST INDEPENDENT TEST METRICS
+------------------------------------------------------------------------
+  Overall Accuracy      : 66.43%
+  Balanced Accuracy     : 66.33%
+  Sensitivity (Recall 1): 74.16%
+  Specificity (Recall 0): 58.51%
+  Precision (Abnormal)  : 64.68%
+  F1-Score (Abnormal)   : 69.10%
+  ROC-AUC Score         : 0.7369
+  PR-AUC Score          : 0.8243
+
+Confusion Matrix:
+                Pred Normal (0)   Pred Abnormal (1)
+  Actual Norm(0):      3321             2355
+  Actual Abn (1):      1503             4313
+
+------------------------------------------------------------------------
+HEAD-TO-HEAD COMPARISON: BASELINE DECISION TREE vs RANDOM FOREST
+------------------------------------------------------------------------
+  Metric               Baseline (Decision Tree)    New Random Forest        Delta
+  ---------------------------------------------------------------------------------
+  Accuracy              54.26%                      66.43%                 +12.16%
+  Balanced Accuracy     53.90%                      66.33%                 +12.44%
+  Sensitivity (Abn)     84.04%                      74.16%                  -9.89%
+  Specificity (Norm)    23.75%                      58.51%                 +34.76%
+  Precision (Abn)       53.04%                      64.68%                 +11.64%
+  F1-Score (Abn)        65.03%                      69.10%                  +4.06%
+
+Per-Record Test Performance Breakdown:
+ Record  Label  TotalBeats  CorrectBeats   Accuracy
+    100      0        2272          1557  68.529930
+    104      1         826           569  68.886199
+    108      1         400           400 100.000000
+    113      0        1792          1730  96.540179
+    118      1         869            14   1.611047
+    124      0        1612            34   2.109181
+    213      1        1245          1233  99.036145
+    220      1         736           357  48.505435
+    223      1         832           832 100.000000
+    233      1         908           908 100.000000
+
+Saved independent evaluation metrics to: C:\Users\srjas\OneDrive\Desktop\ECG FINAL PROJ\05_results\stage8_independent_evaluation_metrics.json
+
+========================================================================
+STAGE 8 RESULT: PASSED
+Independent evaluation completed. Ready for Stage 9 (Feature Importance & Interpretability).
+========================================================================

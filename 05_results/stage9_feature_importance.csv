@@ -1,0 +1,11 @@
+Feature,Gini_Importance_Pct,Gini_Std_Pct,Permutation_BalAcc_Drop_Pct,Permutation_Std_Pct,Clinical_Interpretation
+HRV,43.66,9.76,6.27,0.17,Autonomic nervous system tone; standard deviation of NN intervals.
+QTInterval,11.96,5.7,0.95,0.14,Ventricular repolarization duration; long/short QT syndrome risk.
+HeartRate,8.29,6.33,5.04,0.15,Chronotropic rate metric; distinguishes tachy/bradyarrhythmias.
+QRSDuration,8.09,3.7,-2.97,0.11,Ventricular depolarization width; hallmark of PVCs and bundle branch blocks.
+RRInterval,7.59,6.15,4.8,0.05,Beat timing; rhythm regularity and pause identification.
+PRInterval,7.19,3.88,7.46,0.32,AV conduction time; identifies AV blocks and pre-excitation.
+RAmplitude,6.04,3.33,1.96,0.19,Ventricular peak amplitude; hypertrophy or conduction anomalies.
+STSegment,2.58,1.69,-0.73,0.08,Ischemic proxy level; ST elevation or depression.
+PAmplitude,2.38,1.36,1.99,0.17,Atrial depolarization amplitude; P-wave morphology.
+TAmplitude,2.23,1.25,0.76,0.07,Ventricular repolarization amplitude; hyperkalemia or inversion.

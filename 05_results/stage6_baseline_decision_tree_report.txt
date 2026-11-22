@@ -1,0 +1,92 @@
+================================================================================
+ECG FINAL PRO — STAGE 6 (REVISED): DECISION TREE BASELINE BENCHMARKING
+Regenerated Balanced Models (split=10, leaf=5) | Preserved Legacy Unweighted (split=2, leaf=1)
+================================================================================
+
+1. DATASET LOADING & PARTITION ISOLATION STATEMENT:
+   Dataset Source: C:\Users\srjas\OneDrive\Desktop\ECG FINAL PROJ\04_machine_learning\mitbih_beat_features_mapped_v2_k10.csv
+   [DISK READ REALITY]: Raw file contained 101,425 total beats, including 19,397 Independent_Test rows.
+   [PIPELINE FILTERING]: Filtered strictly to development partitions: 82,028 beats (Train_Dev + Validation).
+   [ISOLATION CERTIFICATION]: Independent_Test rows were completely removed BEFORE preprocessing, training, or evaluation.
+
+2. GROUND-TRUTH VALIDATION LABEL RECONCILIATION:
+   Train_Dev (66,679 beats):
+     - Class 0 (AAMI N)                     : 60,034 (90.03%)
+     - Class 1 (Selected Non-Normal S, V, F): 6,645 (9.97%)
+   Validation (15,349 beats):
+     - Class 0 (AAMI N)                     : 13,309 (86.71%) [FROZEN GROUND TRUTH]
+     - Class 1 (Selected Non-Normal S, V, F): 2,040 (13.29%) [FROZEN GROUND TRUTH]
+   * Forensic Audit Note on Earlier 13,668 / 1,681 Counts:
+     An audit confirmed that 13,668 / 1,681 never existed in any dataset file or Stage 5 output.
+     It was an ungrounded narrative estimation written during the drafting of the Stage 6 plan
+     (assuming a flat 89.05% Class 0 ratio). The actual dataset ground truth has always been 13,309 vs 2,040.
+
+--------------------------------------------------------------------------------
+3. BENCHMARKING REGENERATED BALANCED MODELS & PRESERVED UNWEIGHTED MODELS
+--------------------------------------------------------------------------------
+   Hyperparameter Audit:
+     * Primary Balanced Models (REGENERATED V2):
+       criterion='gini', max_depth=10, min_samples_split=10, min_samples_leaf=5, class_weight='balanced', random_state=42
+     * Legacy-Style Unweighted Models (PRESERVED UNCHANGED):
+       criterion='gini', max_depth=10, min_samples_split=2, min_samples_leaf=1, class_weight=None, random_state=42
+
+=== Exp A: Timing-Only (2 features: RRInterval, HRV) (Train shape: (66679, 2), Val shape: (15349, 2)) ===
+  [Balanced_Regenerated_V2     ] Acc:  83.34% | BalAcc:  86.74% | Sens (C1):  91.37% | Spec (C0):  82.11% | Prec (C1):  43.91% | F1 (C1):  59.32% | Macro F1:  74.42% | ROC-AUC: 0.8926 | AP: 0.5297
+                                Confusion Matrix: TN=10,928, FP=2,381, FN=176, TP=1,864 (Total Class 1 beats: 2,040)
+  [Legacy_Unweighted_Preserved ] Acc:  87.32% | BalAcc:  64.44% | Sens (C1):  33.28% | Spec (C0):  95.60% | Prec (C1):  53.72% | F1 (C1):  41.10% | Macro F1:  67.00% | ROC-AUC: 0.8907 | AP: 0.5159
+                                Confusion Matrix: TN=12,724, FP=585, FN=1,361, TP=679 (Total Class 1 beats: 2,040)
+
+=== Exp B: Morphology-Only (7 features: QRS, QT, ST, PR, P_amp, R_amp, T_amp) (Train shape: (66679, 7), Val shape: (15349, 7)) ===
+  [Balanced_Regenerated_V2     ] Acc:  63.45% | BalAcc:  58.57% | Sens (C1):  51.91% | Spec (C0):  65.22% | Prec (C1):  18.62% | F1 (C1):  27.41% | Macro F1:  51.49% | ROC-AUC: 0.6470 | AP: 0.2230
+                                Confusion Matrix: TN=8,680, FP=4,629, FN=981, TP=1,059 (Total Class 1 beats: 2,040)
+  [Legacy_Unweighted_Preserved ] Acc:  77.20% | BalAcc:  53.30% | Sens (C1):  20.74% | Spec (C0):  85.86% | Prec (C1):  18.35% | F1 (C1):  19.47% | Macro F1:  53.10% | ROC-AUC: 0.6273 | AP: 0.1848
+                                Confusion Matrix: TN=11,427, FP=1,882, FN=1,617, TP=423 (Total Class 1 beats: 2,040)
+
+=== Exp C: Combined WITHOUT Missingness Indicators (9 numerical features) (Train shape: (66679, 9), Val shape: (15349, 9)) ===
+  [Balanced_Regenerated_V2     ] Acc:  74.95% | BalAcc:  70.74% | Sens (C1):  65.00% | Spec (C0):  76.47% | Prec (C1):  29.75% | F1 (C1):  40.82% | Macro F1:  62.47% | ROC-AUC: 0.8206 | AP: 0.4054
+                                Confusion Matrix: TN=10,178, FP=3,131, FN=714, TP=1,326 (Total Class 1 beats: 2,040)
+  [Legacy_Unweighted_Preserved ] Acc:  82.99% | BalAcc:  67.69% | Sens (C1):  46.86% | Spec (C0):  88.53% | Prec (C1):  38.50% | F1 (C1):  42.27% | Macro F1:  66.15% | ROC-AUC: 0.8280 | AP: 0.3548
+                                Confusion Matrix: TN=11,782, FP=1,527, FN=1,084, TP=956 (Total Class 1 beats: 2,040)
+
+=== Exp D: Combined WITH Missingness Indicators (15 features: 9 numerical + 6 indicators) (Train shape: (66679, 15), Val shape: (15349, 15)) ===
+  [Balanced_Regenerated_V2     ] Acc:  78.33% | BalAcc:  81.90% | Sens (C1):  86.76% | Spec (C0):  77.04% | Prec (C1):  36.68% | F1 (C1):  51.56% | Macro F1:  68.80% | ROC-AUC: 0.8562 | AP: 0.5049
+                                Confusion Matrix: TN=10,253, FP=3,056, FN=270, TP=1,770 (Total Class 1 beats: 2,040)
+  [Legacy_Unweighted_Preserved ] Acc:  81.89% | BalAcc:  63.37% | Sens (C1):  38.14% | Spec (C0):  88.59% | Prec (C1):  33.89% | F1 (C1):  35.89% | Macro F1:  62.67% | ROC-AUC: 0.7922 | AP: 0.3260
+                                Confusion Matrix: TN=11,791, FP=1,518, FN=1,262, TP=778 (Total Class 1 beats: 2,040)
+
+Saved updated benchmark metrics table to: C:\Users\srjas\OneDrive\Desktop\ECG FINAL PROJ\05_results\stage6_baseline_decision_tree_metrics.csv
+Saved updated confusion matrices breakdown to: C:\Users\srjas\OneDrive\Desktop\ECG FINAL PROJ\05_results\stage6_baseline_decision_tree_confusion_matrices.csv
+
+--------------------------------------------------------------------------------
+4. DIRECT COMPARISON: BALANCED V1 (split=2, leaf=1) VS. BALANCED V2 (split=10, leaf=5)
+--------------------------------------------------------------------------------
+Experiment                     | Metric             | V1 (split=2, leaf=1) | V2 (split=10, leaf=5)  | Delta (V2 - V1)
+--------------------------------------------------------------------------------------------------------------
+Timing_Only                    | Accuracy           |  83.71%              |  83.34%                | -0.37%
+Timing_Only                    | Balanced Acc       |  85.85%              |  86.74%                | +0.89%
+Timing_Only                    | Sens (C1)          |  88.77%              |  91.37%                | +2.60%
+Timing_Only                    | Prec (C1)          |  44.35%              |  43.91%                | -0.44%
+Timing_Only                    | F1 (C1)            |  59.15%              |  59.32%                | +0.17%
+Timing_Only                    | Average Prec (AP)  | 0.5088               | 0.5297                 | +0.0209
+--------------------------------------------------------------------------------------------------------------
+Morphology_Only                | Accuracy           |  70.44%              |  63.45%                | -6.99%
+Morphology_Only                | Balanced Acc       |  62.14%              |  58.57%                | -3.57%
+Morphology_Only                | Sens (C1)          |  50.83%              |  51.91%                | +1.08%
+Morphology_Only                | Prec (C1)          |  22.69%              |  18.62%                | -4.07%
+Morphology_Only                | F1 (C1)            |  31.37%              |  27.41%                | -3.96%
+Morphology_Only                | Average Prec (AP)  | 0.2231               | 0.2230                 | -0.0001
+--------------------------------------------------------------------------------------------------------------
+Combined_No_Indicators         | Accuracy           |  78.17%              |  74.95%                | -3.22%
+Combined_No_Indicators         | Balanced Acc       |  70.75%              |  70.74%                | -0.01%
+Combined_No_Indicators         | Sens (C1)          |  60.64%              |  65.00%                | +4.36%
+Combined_No_Indicators         | Prec (C1)          |  32.68%              |  29.75%                | -2.93%
+Combined_No_Indicators         | F1 (C1)            |  42.47%              |  40.82%                | -1.65%
+Combined_No_Indicators         | Average Prec (AP)  | 0.3626               | 0.4054                 | +0.0428
+--------------------------------------------------------------------------------------------------------------
+Combined_With_Indicators       | Accuracy           |  81.08%              |  78.33%                | -2.75%
+Combined_With_Indicators       | Balanced Acc       |  83.09%              |  81.90%                | -1.19%
+Combined_With_Indicators       | Sens (C1)          |  85.83%              |  86.76%                | +0.93%
+Combined_With_Indicators       | Prec (C1)          |  40.11%              |  36.68%                | -3.43%
+Combined_With_Indicators       | F1 (C1)            |  54.67%              |  51.56%                | -3.11%
+Combined_With_Indicators       | Average Prec (AP)  | 0.4549               | 0.5049                 | +0.0500
+--------------------------------------------------------------------------------------------------------------

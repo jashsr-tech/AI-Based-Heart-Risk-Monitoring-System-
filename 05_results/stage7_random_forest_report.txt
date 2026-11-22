@@ -1,0 +1,153 @@
+================================================================================
+ECG FINAL PRO — STAGE 7: RANDOM FOREST ARCHITECTURE & TRAINING
+Strict Development-Dataset Isolation | 150 Decorrelated Trees | Dual Feature Importance
+================================================================================
+
+1. DATASET LOADING & PHYSICAL ISOLATION VERIFICATION:
+   Input Source: C:\Users\srjas\OneDrive\Desktop\ECG FINAL PROJ\04_machine_learning\mitbih_development_dataset.csv
+   Total rows loaded from development file: 82,028 beats.
+   Partitions present in development file: ['Train_Dev', 'Validation']
+   [ISOLATION CERTIFIED] Independent_Test is physically absent from the loaded file.
+
+   Verified Class Distributions:
+     * Train_Dev  (66,679 beats, 30 subjects):
+       - Class 0 (AAMI N)                     : 60,034 (90.03%)
+       - Class 1 (Selected Non-Normal S, V, F): 6,645 (9.97%)
+     * Validation (15,349 beats, 7 subjects):
+       - Class 0 (AAMI N)                     : 13,309 (86.71%)
+       - Class 1 (Selected Non-Normal S, V, F): 2,040 (13.29%)
+
+2. PREPROCESSING APPLICATION (Stage 5 Artifacts):
+   Loading imputer: C:\Users\srjas\OneDrive\Desktop\ECG FINAL PROJ\models\ecg_feature_imputer.pkl
+   Loading scaler : C:\Users\srjas\OneDrive\Desktop\ECG FINAL PROJ\models\ecg_feature_scaler.pkl
+
+--------------------------------------------------------------------------------
+3. EIGHT-MODEL RANDOM FOREST BENCHMARKING (150 TREES, MAX_DEPTH=12, MAX_FEATURES='SQRT')
+--------------------------------------------------------------------------------
+
+=== Exp A: Timing-Only (2 features: RRInterval, HRV) (Train: (66679, 2), Val: (15349, 2)) ===
+  [Balanced   ] Acc:  86.44% | BalAcc:  86.74% | Sens (C1):  87.16% | Spec (C0):  86.33% | Prec (C1):  49.43% | F1 (C1):  63.08% | Macro F1:  77.39% | ROC-AUC: 0.9234 | AP: 0.5436
+                Confusion Matrix: TN=11,490, FP=1,819, FN=262, TP=1,778 (Total Class 1: 2,040)
+  [Unweighted ] Acc:  87.56% | BalAcc:  65.14% | Sens (C1):  34.61% | Spec (C0):  95.67% | Prec (C1):  55.07% | F1 (C1):  42.50% | Macro F1:  67.76% | ROC-AUC: 0.9250 | AP: 0.5440
+                Confusion Matrix: TN=12,733, FP=576, FN=1,334, TP=706 (Total Class 1: 2,040)
+
+=== Exp B: Morphology-Only (7 features: QRS, QT, ST, PR, P_amp, R_amp, T_amp) (Train: (66679, 7), Val: (15349, 7)) ===
+  [Balanced   ] Acc:  67.22% | BalAcc:  63.63% | Sens (C1):  58.73% | Spec (C0):  68.53% | Prec (C1):  22.24% | F1 (C1):  32.26% | Macro F1:  55.32% | ROC-AUC: 0.7228 | AP: 0.2868
+                Confusion Matrix: TN=9,120, FP=4,189, FN=842, TP=1,198 (Total Class 1: 2,040)
+  [Unweighted ] Acc:  83.53% | BalAcc:  58.69% | Sens (C1):  24.85% | Spec (C0):  92.52% | Prec (C1):  33.75% | F1 (C1):  28.63% | Macro F1:  59.66% | ROC-AUC: 0.6809 | AP: 0.2968
+                Confusion Matrix: TN=12,314, FP=995, FN=1,533, TP=507 (Total Class 1: 2,040)
+
+=== Exp C: Combined WITHOUT Missingness Indicators (9 numerical features) (Train: (66679, 9), Val: (15349, 9)) ===
+  [Balanced   ] Acc:  81.03% | BalAcc:  79.95% | Sens (C1):  78.48% | Spec (C0):  81.43% | Prec (C1):  39.31% | F1 (C1):  52.38% | Macro F1:  70.27% | ROC-AUC: 0.8832 | AP: 0.5111
+                Confusion Matrix: TN=10,837, FP=2,472, FN=439, TP=1,601 (Total Class 1: 2,040)
+  [Unweighted ] Acc:  87.79% | BalAcc:  67.85% | Sens (C1):  40.69% | Spec (C0):  95.01% | Prec (C1):  55.56% | F1 (C1):  46.97% | Macro F1:  70.04% | ROC-AUC: 0.8616 | AP: 0.5033
+                Confusion Matrix: TN=12,645, FP=664, FN=1,210, TP=830 (Total Class 1: 2,040)
+
+=== Exp D: Combined WITH Missingness Indicators (15 features: 9 numerical + 6 indicators) (Train: (66679, 15), Val: (15349, 15)) ===
+  [Balanced   ] Acc:  82.31% | BalAcc:  81.27% | Sens (C1):  79.85% | Spec (C0):  82.68% | Prec (C1):  41.41% | F1 (C1):  54.54% | Macro F1:  71.78% | ROC-AUC: 0.8853 | AP: 0.5842
+                Confusion Matrix: TN=11,004, FP=2,305, FN=411, TP=1,629 (Total Class 1: 2,040)
+  [Unweighted ] Acc:  89.04% | BalAcc:  68.13% | Sens (C1):  39.66% | Spec (C0):  96.61% | Prec (C1):  64.21% | F1 (C1):  49.03% | Macro F1:  71.45% | ROC-AUC: 0.8698 | AP: 0.5805
+                Confusion Matrix: TN=12,858, FP=451, FN=1,231, TP=809 (Total Class 1: 2,040)
+
+Saved Random Forest metrics table: C:\Users\srjas\OneDrive\Desktop\ECG FINAL PROJ\05_results\stage7_random_forest_metrics.csv
+Saved confusion matrices table: C:\Users\srjas\OneDrive\Desktop\ECG FINAL PROJ\05_results\stage7_random_forest_confusion_matrices.csv
+
+--------------------------------------------------------------------------------
+4. RANDOM FOREST VS. DECISION TREE DELTA BENCHMARKING
+--------------------------------------------------------------------------------
+Experiment                 | Metric             | Decision Tree  | Random Forest  | Ensemble Delta (RF - DT)
+------------------------------------------------------------------------------------------
+Timing_Only                | Accuracy           |  83.34%       |  86.44%       |  +3.10%
+Timing_Only                | Balanced Acc       |  86.74%       |  86.74%       |  +0.00%
+Timing_Only                | Sens (C1)          |  91.37%       |  87.16%       |  -4.21%
+Timing_Only                | Prec (C1)          |  43.91%       |  49.43%       |  +5.52%
+Timing_Only                | F1 (C1)            |  59.32%       |  63.08%       |  +3.76%
+Timing_Only                | Average Prec (AP)  |   0.5297       |   0.5436       |  +0.0139
+Timing_Only                | ROC-AUC            |   0.8926       |   0.9234       |  +0.0308
+------------------------------------------------------------------------------------------
+Morphology_Only            | Accuracy           |  63.45%       |  67.22%       |  +3.77%
+Morphology_Only            | Balanced Acc       |  58.57%       |  63.63%       |  +5.06%
+Morphology_Only            | Sens (C1)          |  51.91%       |  58.73%       |  +6.82%
+Morphology_Only            | Prec (C1)          |  18.62%       |  22.24%       |  +3.62%
+Morphology_Only            | F1 (C1)            |  27.41%       |  32.26%       |  +4.85%
+Morphology_Only            | Average Prec (AP)  |   0.2230       |   0.2868       |  +0.0638
+Morphology_Only            | ROC-AUC            |   0.6470       |   0.7228       |  +0.0758
+------------------------------------------------------------------------------------------
+Combined_No_Indicators     | Accuracy           |  74.95%       |  81.03%       |  +6.08%
+Combined_No_Indicators     | Balanced Acc       |  70.74%       |  79.95%       |  +9.21%
+Combined_No_Indicators     | Sens (C1)          |  65.00%       |  78.48%       | +13.48%
+Combined_No_Indicators     | Prec (C1)          |  29.75%       |  39.31%       |  +9.56%
+Combined_No_Indicators     | F1 (C1)            |  40.82%       |  52.38%       | +11.56%
+Combined_No_Indicators     | Average Prec (AP)  |   0.4054       |   0.5111       |  +0.1057
+Combined_No_Indicators     | ROC-AUC            |   0.8206       |   0.8832       |  +0.0626
+------------------------------------------------------------------------------------------
+Combined_With_Indicators   | Accuracy           |  78.33%       |  82.31%       |  +3.98%
+Combined_With_Indicators   | Balanced Acc       |  81.90%       |  81.27%       |  -0.63%
+Combined_With_Indicators   | Sens (C1)          |  86.76%       |  79.85%       |  -6.91%
+Combined_With_Indicators   | Prec (C1)          |  36.68%       |  41.41%       |  +4.73%
+Combined_With_Indicators   | F1 (C1)            |  51.56%       |  54.54%       |  +2.98%
+Combined_With_Indicators   | Average Prec (AP)  |   0.5049       |   0.5842       |  +0.0793
+Combined_With_Indicators   | ROC-AUC            |   0.8562       |   0.8853       |  +0.0291
+------------------------------------------------------------------------------------------
+Saved RF vs DT comparison table: C:\Users\srjas\OneDrive\Desktop\ECG FINAL PROJ\05_results\stage7_rf_vs_dt_comparison.csv
+
+--------------------------------------------------------------------------------
+5. DUAL FEATURE IMPORTANCE ANALYSIS (MDI & PERMUTATION IMPORTANCE)
+--------------------------------------------------------------------------------
+   Evaluating Experiment D (15 features) and Experiment C (9 features):
+   - MDI: Accumulated Gini reduction during training.
+   - PFI: Out-of-sample Average Precision drop across 10 repeats on Validation.
+
+   Computing Permutation Importance for Combined_No_Indicators (10 repeats)...
+
+   Computing Permutation Importance for Combined_With_Indicators (10 repeats)...
+Saved MDI importances to: C:\Users\srjas\OneDrive\Desktop\ECG FINAL PROJ\05_results\stage7_feature_importance_mdi.csv
+Saved PFI importances to: C:\Users\srjas\OneDrive\Desktop\ECG FINAL PROJ\05_results\stage7_feature_importance_pfi.csv
+
+   Experiment D (15 Features) Importance Ranking (Sorted by Out-of-Sample PFI AP Drop):
+   Rank  | Feature Name     | PFI AP Drop (mean +- std)  | MDI Gini Importance  | Type
+-------------------------------------------------------------------------------------
+   1     | RRInterval       |  +0.3534 +- 0.0051          |       0.2382         | Numerical Feature
+   2     | P_Valid          |  +0.0530 +- 0.0032          |       0.0680         | Missingness Indicator
+   3     | QRS_Valid        |  +0.0506 +- 0.0020          |       0.0336         | Missingness Indicator
+   4     | PR_Valid         |  +0.0436 +- 0.0039          |       0.1357         | Missingness Indicator
+   5     | TAmplitude       |  +0.0412 +- 0.0026          |       0.0548         | Numerical Feature
+   6     | PRInterval       |  +0.0332 +- 0.0032          |       0.0524         | Numerical Feature
+   7     | STSegment        |  +0.0332 +- 0.0019          |       0.0265         | Numerical Feature
+   8     | HRV              |  +0.0314 +- 0.0034          |       0.1250         | Numerical Feature
+   9     | QTInterval       |  +0.0135 +- 0.0019          |       0.0276         | Numerical Feature
+   10    | QT_Valid         |  +0.0103 +- 0.0005          |       0.0075         | Missingness Indicator
+   11    | QRSDuration      |  +0.0096 +- 0.0047          |       0.0551         | Numerical Feature
+   12    | PAmplitude       |  +0.0023 +- 0.0007          |       0.0256         | Numerical Feature
+   13    | ST_Valid         |  -0.0022 +- 0.0010          |       0.0079         | Missingness Indicator
+   14    | Baseline_Valid   |  -0.0043 +- 0.0007          |       0.0043         | Missingness Indicator
+   15    | RAmplitude       |  -0.0544 +- 0.0039          |       0.1379         | Numerical Feature
+
+--------------------------------------------------------------------------------
+6. GENERATING EVALUATION FIGURES
+--------------------------------------------------------------------------------
+   Saved ROC curves plot: C:\Users\srjas\OneDrive\Desktop\ECG FINAL PROJ\05_results\stage7_roc_curves.png
+   Saved PR curves plot: C:\Users\srjas\OneDrive\Desktop\ECG FINAL PROJ\05_results\stage7_precision_recall_curves.png
+   Saved feature importance comparison plot: C:\Users\srjas\OneDrive\Desktop\ECG FINAL PROJ\05_results\stage7_feature_importance_mdi_vs_pfi.png
+   Saved confusion matrices grid: C:\Users\srjas\OneDrive\Desktop\ECG FINAL PROJ\05_results\stage7_confusion_matrices.png
+   Saved RF vs DT comparison plot: C:\Users\srjas\OneDrive\Desktop\ECG FINAL PROJ\05_results\stage7_rf_vs_dt_comparison.png
+
+--------------------------------------------------------------------------------
+7. SUMMARY OF STAGE 7 FINDINGS
+--------------------------------------------------------------------------------
+   A. Ensemble Improvement over Decision Tree Baseline:
+      * Exp A (Timing)              : Decision Tree AP = 0.5297 -> Random Forest AP = 0.5436 (Delta: +0.0139)
+      * Exp B (Morphology)          : Decision Tree AP = 0.2230 -> Random Forest AP = 0.2868 (Delta: +0.0638)
+      * Exp C (Combined No Ind)     : Decision Tree AP = 0.4054 -> Random Forest AP = 0.5111 (Delta: +0.1057)
+      * Exp D (Combined With Ind)   : Decision Tree AP = 0.5049 -> Random Forest AP = 0.5842 (Delta: +0.0793)
+
+   B. Missingness Shortcut Analysis (Exp D vs. Exp C):
+      * Exp C (9 Numerical Features)   : AP = 0.5111 | F1 (C1) = 52.38% | Sens = 78.48%
+      * Exp D (15 Features w/ Ind)     : AP = 0.5842 | F1 (C1) = 54.54% | Sens = 79.85%
+      * Average Precision Delta (D - C): +0.0731
+      * F1-Score Delta (D - C)         : +2.16%
+
+   C. Physiological vs. Indicator Importance in Experiment D:
+      * Top 3 Features by Out-of-Sample PFI Drop: ['RRInterval', 'P_Valid', 'QRS_Valid']
+      * Important Caveat: Positive AP drop indicates predictive dependency within this model architecture,
+        not proof of biological causality or clinical pathogenesis.

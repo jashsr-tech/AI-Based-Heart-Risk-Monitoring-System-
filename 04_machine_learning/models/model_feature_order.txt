@@ -1,0 +1,10 @@
+HeartRate
+RRInterval
+PRInterval
+QRSDuration
+QTInterval
+STSegment
+HRV
+PAmplitude
+RAmplitude
+TAmplitude

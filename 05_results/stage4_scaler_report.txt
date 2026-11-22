@@ -1,0 +1,37 @@
+========================================================================
+ECG FINAL PRO — STAGE 4: FEATURE PREPROCESSING & SCALER FITTING
+========================================================================
+X_train shape: (41472, 10) (from 38 records)
+X_test shape : (11492, 10) (from 10 records)
+
+[PASS] StandardScaler fitted strictly on X_train.
+Features in scaler: 10
+
+Fitted Scaler Parameters (per feature):
+   1. HeartRate     : Mean =   75.23273, Scale =   17.46484
+   2. RRInterval    : Mean =    0.87322, Scale =    0.54837
+   3. PRInterval    : Mean =    0.11301, Scale =    0.03819
+   4. QRSDuration   : Mean =    0.08181, Scale =    0.01951
+   5. QTInterval    : Mean =    0.33027, Scale =    0.06275
+   6. STSegment     : Mean =   -0.44647, Scale =    0.65845
+   7. HRV           : Mean =    0.38116, Scale =    2.15977
+   8. PAmplitude    : Mean =    0.27994, Scale =    0.55701
+   9. RAmplitude    : Mean =    4.39818, Scale =    1.32922
+  10. TAmplitude    : Mean =    0.69050, Scale =    0.72206
+
+Saved parameters table to: C:\Users\srjas\OneDrive\Desktop\ECG FINAL PROJ\05_results\stage4_scaler_parameters.csv
+
+Transformed Statistical Verification:
+  X_train_scaled mean max absolute dev from 0: 6.23e-16
+  X_train_scaled std max absolute dev from 1 : 1.11e-16
+  X_test_scaled mean range: [-0.5925, 0.5666]
+  X_test_scaled std range : [0.4289, 1.3669]
+[PASS] Zero NaNs or Infs in both scaled matrices.
+
+Saved candidate scaler to: C:\Users\srjas\OneDrive\Desktop\ECG FINAL PROJ\05_results\stage4_candidate_scaler.pkl
+[PASS] Scaler round-trip reload and single-vector inference verified.
+
+========================================================================
+STAGE 4 RESULT: PASSED
+Feature preprocessing pipeline verified and certified ready for Stage 5.
+========================================================================

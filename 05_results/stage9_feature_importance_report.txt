@@ -1,0 +1,41 @@
+========================================================================
+ECG FINAL PRO — STAGE 9: FEATURE IMPORTANCE & INTERPRETABILITY
+========================================================================
+Loaded Random Forest model with 150 trees.
+Evaluating on 11,492 independent test beats.
+
+------------------------------------------------------------------------
+1. GINI FEATURE IMPORTANCE (ENSEMBLE AVERAGE)
+------------------------------------------------------------------------
+   1. HRV           :  43.66% +/-  9.76%
+   2. QTInterval    :  11.96% +/-  5.70%
+   3. HeartRate     :   8.29% +/-  6.33%
+   4. QRSDuration   :   8.09% +/-  3.70%
+   5. RRInterval    :   7.59% +/-  6.15%
+   6. PRInterval    :   7.19% +/-  3.88%
+   7. RAmplitude    :   6.04% +/-  3.33%
+   8. STSegment     :   2.58% +/-  1.69%
+   9. PAmplitude    :   2.38% +/-  1.36%
+  10. TAmplitude    :   2.23% +/-  1.25%
+
+------------------------------------------------------------------------
+2. TEST-SET PERMUTATION IMPORTANCE (BALANCED ACCURACY DROP)
+------------------------------------------------------------------------
+Computing permutation importance over 5 repeats...
+   1. PRInterval    : Drop = +7.46% +/- 0.32%
+   2. HRV           : Drop = +6.27% +/- 0.17%
+   3. HeartRate     : Drop = +5.04% +/- 0.15%
+   4. RRInterval    : Drop = +4.80% +/- 0.05%
+   5. PAmplitude    : Drop = +1.99% +/- 0.17%
+   6. RAmplitude    : Drop = +1.96% +/- 0.19%
+   7. QTInterval    : Drop = +0.95% +/- 0.14%
+   8. TAmplitude    : Drop = +0.76% +/- 0.07%
+   9. STSegment     : Drop = -0.73% +/- 0.08%
+  10. QRSDuration   : Drop = -2.97% +/- 0.11%
+
+Saved feature ranking table to: C:\Users\srjas\OneDrive\Desktop\ECG FINAL PROJ\05_results\stage9_feature_importance.csv
+
+========================================================================
+STAGE 9 RESULT: PASSED
+Feature interpretability verified. Ready for Stage 10 (Model Serialization).
+========================================================================

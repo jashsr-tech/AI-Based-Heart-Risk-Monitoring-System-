@@ -1,0 +1,107 @@
+==============================================================================
+ECG FINAL PRO — STAGE 3: BEAT-LEVEL FEATURE DISTRIBUTION REPORT
+==============================================================================
+Total Beats: 101,425 across 48 recordings / 47 subjects
+Class 0 (AAMI Non-Ectopic) : 90,605 beats (89.33%)
+Class 1 (Selected Non-Normal): 10,820 beats (10.67%)
+
+------------------------------------------------------------------------------
+1. FEATURE MISSINGNESS CENSUS
+------------------------------------------------------------------------------
+Feature          | Valid Count  | Missing Count  | Missing Pct 
+------------------------------------------------------------------------------
+HeartRate        | 101,403      | 22             |  0.02%
+RRInterval       | 101,425      | 0              |  0.00%
+PRInterval       | 61,281       | 40,144         | 39.58%
+QRSDuration      | 92,731       | 8,694          |  8.57%
+QTInterval       | 90,159       | 11,266         | 11.11%
+STSegment        | 78,563       | 22,862         | 22.54%
+HRV              | 101,329      | 96             |  0.09%
+PAmplitude       | 47,035       | 54,390         | 53.63%
+RAmplitude       | 101,425      | 0              |  0.00%
+TAmplitude       | 75,599       | 25,826         | 25.46%
+
+------------------------------------------------------------------------------
+2. OVERALL FEATURE STATISTICAL DISTRIBUTIONS
+------------------------------------------------------------------------------
+Feature        | Mean     | Std      | Min      | 25%      | 50%      | 75%      | Max     
+------------------------------------------------------------------------------
+HeartRate      |   84.474 |   30.142 |   10.220 |   66.870 |   80.900 |   93.910 |  583.780
+RRInterval     |    0.776 |    0.227 |    0.031 |    0.639 |    0.742 |    0.897 |    5.872
+PRInterval     |    0.150 |    0.029 |    0.061 |    0.133 |    0.144 |    0.167 |    0.372
+QRSDuration    |    0.149 |    0.056 |    0.053 |    0.100 |    0.139 |    0.183 |    0.300
+QTInterval     |    0.316 |    0.067 |    0.150 |    0.272 |    0.314 |    0.356 |    0.800
+STSegment      |   -0.042 |    0.181 |   -3.357 |   -0.131 |   -0.039 |    0.063 |    2.763
+HRV            |    0.082 |    0.109 |    0.001 |    0.016 |    0.033 |    0.120 |    2.049
+PAmplitude     |    0.112 |    0.060 |    0.000 |    0.065 |    0.112 |    0.152 |    0.468
+RAmplitude     |    1.399 |    0.910 |   -4.001 |    1.025 |    1.490 |    1.953 |    4.261
+TAmplitude     |    0.150 |    0.416 |   -4.161 |   -0.172 |    0.216 |    0.435 |    3.925
+
+------------------------------------------------------------------------------
+3. FEATURE DISTRIBUTIONS BY CLASS (Class 0 vs Class 1)
+------------------------------------------------------------------------------
+
+--- HeartRate ---
+  Class 0: Mean = 80.286, Median = 78.550, Std = 25.806, IQR = [65.450, 90.000] (Valid: 90,586)
+  Class 1: Mean = 119.549, Median = 113.680, Std = 39.537, IQR = [99.080, 131.710] (Valid: 10,817)
+
+--- RRInterval ---
+  Class 0: Mean = 0.803, Median = 0.764, Std = 0.219, IQR = [0.667, 0.917] (Valid: 90,605)
+  Class 1: Mean = 0.544, Median = 0.528, Std = 0.152, IQR = [0.456, 0.606] (Valid: 10,820)
+
+--- PRInterval ---
+  Class 0: Mean = 0.151, Median = 0.147, Std = 0.029, IQR = [0.133, 0.169] (Valid: 59,704)
+  Class 1: Mean = 0.113, Median = 0.122, Std = 0.029, IQR = [0.089, 0.133] (Valid: 1,577)
+
+--- QRSDuration ---
+  Class 0: Mean = 0.147, Median = 0.136, Std = 0.055, IQR = [0.100, 0.183] (Valid: 85,937)
+  Class 1: Mean = 0.170, Median = 0.161, Std = 0.062, IQR = [0.117, 0.219] (Valid: 6,794)
+
+--- QTInterval ---
+  Class 0: Mean = 0.317, Median = 0.314, Std = 0.065, IQR = [0.275, 0.356] (Valid: 82,389)
+  Class 1: Mean = 0.313, Median = 0.303, Std = 0.079, IQR = [0.258, 0.356] (Valid: 7,770)
+
+--- STSegment ---
+  Class 0: Mean = -0.038, Median = -0.038, Std = 0.168, IQR = [-0.128, 0.068] (Valid: 71,563)
+  Class 1: Mean = -0.084, Median = -0.046, Std = 0.275, IQR = [-0.177, 0.017] (Valid: 7,000)
+
+--- HRV ---
+  Class 0: Mean = 0.070, Median = 0.029, Std = 0.092, IQR = [0.015, 0.095] (Valid: 90,520)
+  Class 1: Mean = 0.183, Median = 0.146, Std = 0.171, IQR = [0.076, 0.239] (Valid: 10,809)
+
+--- PAmplitude ---
+  Class 0: Mean = 0.114, Median = 0.114, Std = 0.059, IQR = [0.068, 0.153] (Valid: 45,607)
+  Class 1: Mean = 0.056, Median = 0.039, Std = 0.052, IQR = [0.016, 0.080] (Valid: 1,428)
+
+--- RAmplitude ---
+  Class 0: Mean = 1.469, Median = 1.514, Std = 0.770, IQR = [1.078, 1.961] (Valid: 90,605)
+  Class 1: Mean = 0.816, Median = 1.132, Std = 1.553, IQR = [0.342, 1.835] (Valid: 10,820)
+
+--- TAmplitude ---
+  Class 0: Mean = 0.146, Median = 0.202, Std = 0.392, IQR = [-0.172, 0.428] (Valid: 69,134)
+  Class 1: Mean = 0.197, Median = 0.312, Std = 0.614, IQR = [-0.176, 0.581] (Valid: 6,465)
+
+------------------------------------------------------------------------------
+4. FEATURE DISTRIBUTIONS BY DATASET PARTITION
+------------------------------------------------------------------------------
+
+--- Partition: Train_Dev (N = 66,679 beats, 30 subjects) ---
+  Class 0: 60,034 (90.0%) | Class 1: 6,645 (10.0%)
+  HeartRate Mean : 84.1 bpm (Std: 28.7)
+  RRInterval Mean: 0.774 s (Std: 0.228)
+  QRSDuration Mean: 0.154 s (Std: 0.056)
+  STSegment Mean  : -0.054 mV (Std: 0.180)
+
+--- Partition: Validation (N = 15,349 beats, 7 subjects) ---
+  Class 0: 13,309 (86.7%) | Class 1: 2,040 (13.3%)
+  HeartRate Mean : 81.3 bpm (Std: 32.3)
+  RRInterval Mean: 0.810 s (Std: 0.212)
+  QRSDuration Mean: 0.147 s (Std: 0.060)
+  STSegment Mean  : -0.030 mV (Std: 0.193)
+
+--- Partition: Independent_Test (N = 19,397 beats, 10 subjects) ---
+  Class 0: 17,262 (89.0%) | Class 1: 2,135 (11.0%)
+  HeartRate Mean : 88.3 bpm (Std: 32.8)
+  RRInterval Mean: 0.753 s (Std: 0.234)
+  QRSDuration Mean: 0.131 s (Std: 0.046)
+  STSegment Mean  : -0.009 mV (Std: 0.165)

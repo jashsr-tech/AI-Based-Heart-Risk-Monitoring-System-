@@ -1,0 +1,29 @@
+========================================================================
+ECG FINAL PRO — STAGE 10: MODEL SERIALIZATION & ARTIFACT STORAGE
+========================================================================
+[INFO] Archived legacy Decision Tree to: C:\Users\srjas\OneDrive\Desktop\ECG FINAL PROJ\04_machine_learning\models\legacy_decision_tree_archive\ecg_decision_tree_model.pkl
+[INFO] Archived legacy Scaler to: C:\Users\srjas\OneDrive\Desktop\ECG FINAL PROJ\04_machine_learning\models\legacy_decision_tree_archive\ecg_feature_scaler.pkl
+
+Persisting newly trained Random Forest artifacts...
+  -> Saved new model : C:\Users\srjas\OneDrive\Desktop\ECG FINAL PROJ\04_machine_learning\models\ecg_random_forest_model.pkl
+  -> Saved new scaler: C:\Users\srjas\OneDrive\Desktop\ECG FINAL PROJ\04_machine_learning\models\ecg_feature_scaler.pkl
+  -> Saved feature order: C:\Users\srjas\OneDrive\Desktop\ECG FINAL PROJ\04_machine_learning\models\model_feature_order.txt
+  -> Saved manifest   : C:\Users\srjas\OneDrive\Desktop\ECG FINAL PROJ\04_machine_learning\models\model_manifest.json
+
+------------------------------------------------------------------------
+ROUND-TRIP DESERIALIZATION & INFERENCE VERIFICATION
+------------------------------------------------------------------------
+[PASS] Feature ordering verified (10 features).
+[PASS] Model expects 10 input features.
+[PASS] Scaler expects 10 input features.
+
+Sample Inference Test:
+  Raw input       : [[72.0, 0.833, 0.16, 0.08, 0.35, -0.3, 0.05, 0.3, 4.2, 0.7]]
+  Scaled input    : [[-0.18509939657776586, -0.07334097887257379, 1.230661992571906, -0.09261296613526115, 0.314455165079513, 0.2224487119952981, -0.15333194327231028, 0.03601640816314268, -0.1490953439269488, 0.013155500674575337]]
+  Predicted label : 0 (NORMAL)
+  Probabilities   : Normal=74.82%, Abnormal=25.18%
+
+========================================================================
+STAGE 10 RESULT: PASSED
+New Random Forest model and scaler saved and verified. Ready for Stage 11.
+========================================================================

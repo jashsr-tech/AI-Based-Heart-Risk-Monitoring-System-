@@ -1,0 +1,65 @@
+========================================================================
+ECG FINAL PRO — STAGE 11: PIPELINE ALIGNMENT & REPRODUCTION TEST
+========================================================================
+Pipeline Loaded Successfully:
+  - Model file  : ecg_random_forest_model.pkl
+  - Model type  : RandomForestClassifier (RandomForestClassifier)
+  - Scaler file : ecg_feature_scaler.pkl
+  - Features (10): ['HeartRate', 'RRInterval', 'PRInterval', 'QRSDuration', 'QTInterval', 'STSegment', 'HRV', 'PAmplitude', 'RAmplitude', 'TAmplitude']
+[PASS] Confirmed pipeline is using the new validated Random Forest model.
+
+------------------------------------------------------------------------
+TEST 1: CASE A — NORMAL SYNTHETIC ECG (60s)
+------------------------------------------------------------------------
+  Duration: 60.0s | Beats detected: 71
+  Mean HR: 71.91 BPM | HRV: 51.57 ms
+  Predicted Label: 0 (NORMAL)
+  Probabilities  : Normal=73.88%, Abnormal=26.12%
+  Decision Explanation:
+    Ensemble Consensus: 150 trees evaluated (115 voted Normal [0], 35 voted Abnormal [1]).
+    Top Predictive Feature Influences for this Signal:
+      * PRInterval  : raw =   0.1602 (scaled =  +1.24, global importance =  7.19%)
+      * HRV         : raw =   0.0516 (scaled =  -0.15, global importance = 43.66%)
+      * QRSDuration : raw =   0.0755 (scaled =  -0.32, global importance =  8.09%)
+      * HeartRate   : raw =  71.9144 (scaled =  -0.19, global importance =  8.29%)
+  Ground-Truth Comparison: Matched=71/71, Missed=0, FP=0
+    R-peak MAE: 0.649 ms, QRS width MAE: 0.657 ms
+
+------------------------------------------------------------------------
+TEST 2: CASE B — SIMULATED PVC ECTOPIC ECG (60s)
+------------------------------------------------------------------------
+  Duration: 60.0s | Beats detected: 71
+  Mean HR: 72.00 BPM | HRV: 240.65 ms
+  Predicted Label: 1 (ABNORMAL)
+  Probabilities  : Normal=4.84%, Abnormal=95.16%
+  Decision Explanation:
+    Ensemble Consensus: 150 trees evaluated (7 voted Normal [0], 143 voted Abnormal [1]).
+    Top Predictive Feature Influences for this Signal:
+      * PRInterval  : raw =   0.1591 (scaled =  +1.21, global importance =  7.19%)
+      * QTInterval  : raw =   0.3604 (scaled =  +0.48, global importance = 11.96%)
+      * QRSDuration : raw =   0.0903 (scaled =  +0.44, global importance =  8.09%)
+      * HRV         : raw =   0.2407 (scaled =  -0.07, global importance = 43.66%)
+  Ground-Truth Comparison: Matched=71/71, Missed=0, FP=0
+    R-peak MAE: 0.548 ms
+
+------------------------------------------------------------------------
+TEST 3: CASE C — VARIABLE LENGTH SHORT SLICE (10s)
+------------------------------------------------------------------------
+  Duration: 10.0s | Beats detected: 11
+  Mean HR: 70.89 BPM
+  Predicted Label: 0 (NORMAL)
+  Probabilities  : Normal=75.40%, Abnormal=24.60%
+
+Saved predictions summary to: C:\Users\srjas\OneDrive\Desktop\ECG FINAL PROJ\05_results\stage11_test_case_predictions.csv
+
+------------------------------------------------------------------------
+FEATURE REPRODUCTION & INPUT SCHEMA VERIFICATION
+------------------------------------------------------------------------
+  Input Feature Vector Shape: (10,) (Expected: (10,))
+  All Features Finite: True
+  Correct Feature Ordering: True
+
+========================================================================
+STAGE 11 RESULT: PASSED
+Feature extraction pipeline reproduces expected features and interfaces seamlessly with the new Random Forest model.
+========================================================================

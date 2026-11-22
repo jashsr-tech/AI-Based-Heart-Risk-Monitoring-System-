@@ -1,0 +1,64 @@
+============================================================================
+ECG FINAL PRO — STAGE 1: RAW DATABASE, CENSUS & SUBJECT AUDIT
+============================================================================
+MIT-BIH Database Directory: C:\Users\srjas\OneDrive\Desktop\ECG_Project - Copy\mit-bih-arrhythmia-database-1.0.0
+
+----------------------------------------------------------------------------
+1. RAW FILE VERIFICATION (48 BENCHMARK RECORDINGS)
+----------------------------------------------------------------------------
+[PASS] All 48 MIT-BIH recordings verified: 48 .dat, 48 .hea, 48 .atr files present.
+
+----------------------------------------------------------------------------
+2. EVIDENCE-BASED SUBJECT ID MAPPING
+----------------------------------------------------------------------------
+Verified 48 recordings mapped to 47 unique subjects.
+Documented pair: Records 201 and 202 co-assigned to 'Subject_201_202'.
+Subject mapping saved to: C:\Users\srjas\OneDrive\Desktop\ECG FINAL PROJ\05_results\stage1_subject_mapping.csv
+
+----------------------------------------------------------------------------
+3. COMPLETE ANNOTATION CENSUS & RHYTHM SEPARATION AUDIT
+----------------------------------------------------------------------------
+Total MIT-BIH Annotations in Database: 112,647
+
+SUMMARY OF MAPPED CLASSES:
+  CLASS 0: AAMI Non-Ectopic (N)                     : 90,631 beats (89.33%)
+  CLASS 1: Selected Non-Normal Beat Classes (S, V, F): 10,820 beats (10.67%)
+    - S (Supraventricular Ectopic)                  : 2,781 beats
+    - V (Ventricular Ectopic)                       : 7,236 beats
+    - F (Ventricular Fusion)                        : 803 beats
+  TOTAL VALID TRAINING BEATS (Class 0 + Class 1)    : 101,451 beats
+
+EXCLUDED ANNOTATIONS:
+  Paced Beats (/, f)                                : 8,010 (artificial stimulus)
+  Unclassifiable Beats (Q, ?)                       : 33 (ambiguous ground truth)
+  Non-conducted P-wave (x)                          : 193 (no QRS complex)
+  Rhythm & Artifact Markers (+, ~, |, ")            : 2,488 (non-cardiac / context)
+Detailed symbol census saved to: C:\Users\srjas\OneDrive\Desktop\ECG FINAL PROJ\05_results\stage1_annotation_census.txt
+
+----------------------------------------------------------------------------
+4. RHYTHM-LEVEL VS BEAT-LEVEL SEPARATION AUDIT
+----------------------------------------------------------------------------
+Rhythm vs Beat cross-tabulation saved to: C:\Users\srjas\OneDrive\Desktop\ECG FINAL PROJ\05_results\stage1_rhythm_vs_beat_audit.csv
+
+EMPIRICAL PROOF — BEAT CONSTITUTION OF ATRIAL FIBRILLATION ((AFIB) EPISODES:
+  Total beats occurring during (AFIB episodes: 11,571
+  Non-Ectopic beats (N, R) during (AFIB        : 10,444 (90.26%)
+  Ectopic beats (V, A) during (AFIB            : 906 (7.83%)
+  CONCLUSION: Over 90.3% of beats during (AFIB have normal non-ectopic QRS conduction!
+  Assigning 'Abnormal' to all beats in AFib recordings is mathematically invalid.
+  Our beat-level labeling strictly respects the individual beat annotation.
+
+============================================================================
+STAGE 1 AUDIT SUMMARY & CONCLUSION
+============================================================================
+[PASS] All 48 MIT-BIH recordings verified and intact.
+[PASS] Subject_ID mapping verified with documented evidence (201 & 202 co-assigned).
+[PASS] Explicit AAMI annotation mapping documented across all 112,000+ annotations.
+[PASS] Paced (/), fusion-paced (f), unclassifiable (Q), and non-conducted P-waves (x) isolated.
+[PASS] Rhythm annotations separated from heartbeat morphological annotations.
+
+All 4 deliverables generated:
+  1. Census Report  : C:\Users\srjas\OneDrive\Desktop\ECG FINAL PROJ\05_results\stage1_annotation_census.txt
+  2. Subject Mapping: C:\Users\srjas\OneDrive\Desktop\ECG FINAL PROJ\05_results\stage1_subject_mapping.csv
+  3. Rhythm vs Beat : C:\Users\srjas\OneDrive\Desktop\ECG FINAL PROJ\05_results\stage1_rhythm_vs_beat_audit.csv
+  4. Audit Report   : C:\Users\srjas\OneDrive\Desktop\ECG FINAL PROJ\05_results\stage1_audit_report.txt

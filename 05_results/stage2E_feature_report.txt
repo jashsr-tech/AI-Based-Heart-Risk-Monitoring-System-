@@ -1,0 +1,25 @@
+ECG FINAL PRO — STAGE 2E FEATURE REPORT
+
+Sampling rate: 360.0 Hz
+Filtered samples: 21600
+Detected beats: 71
+RR intervals used: 70
+
+FEATURES
+HeartRate: 71.91438763
+RRInterval: 0.83432540
+PRInterval: 0.16017214
+QRSDuration: 0.09229264
+QTInterval: 0.35105634
+STSegment: -0.31447483
+HRV: 0.05156791
+PAmplitude: 0.28571171
+RAmplitude: 4.15882634
+TAmplitude: 0.68568344
+
+IMPORTANT DEFINITIONS
+PRInterval currently means P-peak to R-peak, not clinical PR.
+QRSDuration currently means Q-peak to S-peak.
+QTInterval currently means Q-peak to T-peak.
+STSegment is an amplitude proxy, not a clinical ST measurement.
+Amplitude values are arbitrary synthetic units, not mV.

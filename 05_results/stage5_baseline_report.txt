@@ -1,0 +1,53 @@
+========================================================================
+ECG FINAL PRO — STAGE 5: BASELINE BENCHMARK EVALUATION
+========================================================================
+Training beats: 41,472 (38 records)
+Testing beats : 11,492 (10 records)
+
+Training Baseline Decision Tree (max_depth=10, random_state=42)...
+
+------------------------------------------------------------------------
+BASELINE DECISION TREE PERFORMANCE METRICS
+------------------------------------------------------------------------
+  Training Accuracy     : 99.52%
+  Independent Test Acc  : 54.26%
+  Generalization Gap    : 45.25% (Evidence of single-tree overfitting)
+  Balanced Accuracy     : 53.90%
+  Sensitivity (Abnormal): 84.04%
+  Specificity (Normal)  : 23.75%
+  Precision (Abnormal)  : 53.04%
+  F1-Score (Abnormal)   : 65.03%
+
+Confusion Matrix (Rows: Actual, Cols: Predicted):
+                Pred Normal (0)   Pred Abnormal (1)
+  Actual Norm(0):      1348             4328
+  Actual Abn (1):       928             4888
+
+Classification Report:
+              precision    recall  f1-score   support
+
+  Normal (0)       0.59      0.24      0.34      5676
+Abnormal (1)       0.53      0.84      0.65      5816
+
+    accuracy                           0.54     11492
+   macro avg       0.56      0.54      0.49     11492
+weighted avg       0.56      0.54      0.50     11492
+
+Baseline Feature Importances:
+   1. HRV           :  68.51%
+   2. QTInterval    :  16.14%
+   3. RRInterval    :   5.87%
+   4. HeartRate     :   3.27%
+   5. QRSDuration   :   2.59%
+   6. PRInterval    :   1.94%
+   7. RAmplitude    :   1.25%
+   8. TAmplitude    :   0.25%
+   9. STSegment     :   0.10%
+  10. PAmplitude    :   0.09%
+
+Saved baseline metrics to: C:\Users\srjas\OneDrive\Desktop\ECG FINAL PROJ\05_results\stage5_baseline_metrics.json
+
+========================================================================
+STAGE 5 RESULT: PASSED
+Baseline benchmarks established. Ready for Stage 6 (Random Forest Training).
+========================================================================

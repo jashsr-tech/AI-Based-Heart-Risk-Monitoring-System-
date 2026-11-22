@@ -1,0 +1,42 @@
+{
+  "model_name": "ECG Arrhythmia Random Forest Ensemble",
+  "model_file": "ecg_random_forest_model.pkl",
+  "scaler_file": "ecg_feature_scaler.pkl",
+  "feature_order_file": "model_feature_order.txt",
+  "model_type": "RandomForestClassifier",
+  "n_estimators": 150,
+  "max_depth": 12,
+  "features": [
+    "HeartRate",
+    "RRInterval",
+    "PRInterval",
+    "QRSDuration",
+    "QTInterval",
+    "STSegment",
+    "HRV",
+    "PAmplitude",
+    "RAmplitude",
+    "TAmplitude"
+  ],
+  "features_count": 10,
+  "classes": [
+    0,
+    1
+  ],
+  "class_names": {
+    "0": "NORMAL",
+    "1": "ABNORMAL"
+  },
+  "training_records_count": 38,
+  "independent_test_records_count": 10,
+  "independent_test_metrics": {
+    "accuracy": 0.6642882004872955,
+    "balanced_accuracy": 0.6633350515164117,
+    "sensitivity": 0.7415749656121046,
+    "specificity": 0.5850951374207188,
+    "precision": 0.6468206358728255,
+    "f1_score": 0.6909644344761294,
+    "roc_auc": 0.7369412633419703
+  },
+  "serialization_status": "VALIDATED_AND_CERTIFIED"
+}

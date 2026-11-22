@@ -1,0 +1,107 @@
+==============================================================================
+ECG FINAL PRO — STAGE 3: METHODOLOGY & SHORTCUT DIAGNOSTIC ANALYSIS
+==============================================================================
+Dataset loaded: 101,425 beats (Class 0: 90,605, Class 1: 10,820)
+
+------------------------------------------------------------------------------
+1. HRV METHODOLOGY AUDIT & CAUSALITY PROOF
+------------------------------------------------------------------------------
+Mathematical Specification in Stage 3 implementation:
+  HRV_i = sqrt( 1/M * sum_{j=0}^{M-1} (RR_{i-j} - mean_RR_i)^2 )
+  where M = min(5, N_preceding_valid_beats) with gating condition M >= 3.
+  If M < 3 (e.g. beats 0 and 1 of a recording), HRV_i = NaN.
+
+Causality & Temporal Leakage Verification:
+  - Strict Lookback: Only intervals {RR_i, RR_{i-1}, ..., RR_{i-M+1}} enter the FIFO buffer.
+  - Future beats (RR_{i+1}, RR_{i+2}) are NEVER accessed in the HRV calculation.
+  - Temporal causality is 100% strictly preserved.
+
+Ectopic Beat Handling in Stage 3:
+  - The current Stage 3 implementation computes short-term RR variability across ALL
+    preceding valid beats in the queue (including ectopic beats and coupling pauses).
+  - When a premature beat occurs, RR_pre is abbreviated and followed by a compensatory
+    pause. This causes local RR standard deviation to sharply spike:
+      Class 0 HRV Mean: 0.0697 s (Median: 0.0292 s)
+      Class 1 HRV Mean: 0.1830 s (Median: 0.1456 s)
+  - Thus, in Stage 3, HRV acts as an acute 'Rhythm Perturbation / Prematurity Indicator'
+    rather than steady-state autonomic parasympathetic tone (sinus NN SDNN).
+
+------------------------------------------------------------------------------
+2. CLASS-STRATIFIED MISSINGNESS ANALYSIS (Class 0 vs Class 1)
+------------------------------------------------------------------------------
+Feature        | Class 0 Missing    | Class 1 Missing    | Delta Pct (C1 - C0) 
+------------------------------------------------------------------------------
+HeartRate      |     19 ( 0.02%)   |      3 ( 0.03%)   |  +0.01%
+RRInterval     |      0 ( 0.00%)   |      0 ( 0.00%)   |  +0.00%
+PRInterval     | 30,901 (34.11%)   |  9,243 (85.43%)   | +51.32%
+QRSDuration    |  4,668 ( 5.15%)   |  4,026 (37.21%)   | +32.06%
+QTInterval     |  8,216 ( 9.07%)   |  3,050 (28.19%)   | +19.12%
+STSegment      | 19,042 (21.02%)   |  3,820 (35.30%)   | +14.29%
+HRV            |     85 ( 0.09%)   |     11 ( 0.10%)   |  +0.01%
+PAmplitude     | 44,998 (49.66%)   |  9,392 (86.80%)   | +37.14%
+RAmplitude     |      0 ( 0.00%)   |      0 ( 0.00%)   |  +0.00%
+TAmplitude     | 21,471 (23.70%)   |  4,355 (40.25%)   | +16.55%
+
+Missingness Indicators Presence Rates (Valid == 1):
+  * P_Valid          : Class 0 =  66.2% valid | Class 1 =  22.0% valid (Delta: -44.3%)
+  * PR_Valid         : Class 0 =  65.9% valid | Class 1 =  14.6% valid (Delta: -51.3%)
+  * QRS_Valid        : Class 0 =  94.8% valid | Class 1 =  62.8% valid (Delta: -32.1%)
+  * ST_Valid         : Class 0 =  79.0% valid | Class 1 =  64.7% valid (Delta: -14.3%)
+  * QT_Valid         : Class 0 =  90.9% valid | Class 1 =  71.8% valid (Delta: -19.1%)
+  * Baseline_Valid   : Class 0 =  83.3% valid | Class 1 =  83.5% valid (Delta:  +0.3%)
+
+------------------------------------------------------------------------------
+3. FEATURE CORRELATIONS & MULTICOLLINEARITY (HR vs RR & Redundancies)
+------------------------------------------------------------------------------
+Key Correlation Findings:
+  * HeartRate vs RRInterval : Pearson r = -0.8071, Spearman rho = -0.9997
+    CRITICAL REDUNDANCY: Since HeartRate = 60 / RRInterval, their Spearman rank
+    correlation is mathematically -1.0 (inverse monotonic). Including both features
+    in tree models provides zero new information and splits feature importance weights.
+  * QRSDuration vs QTInterval : Pearson r = 0.1584 (QRS is a subcomponent of QT)
+  * PRInterval vs PAmplitude  : Pearson r = 0.2013
+
+------------------------------------------------------------------------------
+4. FEATURE DOMINANCE & SUBSET SEPARATION CAPACITY (AUC & Cohen's d)
+------------------------------------------------------------------------------
+Feature        | Class 0 Mean | Class 1 Mean | Cohen d (Effect Size)  | Univariate AUC
+------------------------------------------------------------------------------
+HeartRate      |     80.286   |    119.549   |     +1.423             |     0.8643
+RRInterval     |      0.803   |      0.544   |     -1.221             |     0.8642
+PRInterval     |      0.151   |      0.113   |     -1.326             |     0.5691
+QRSDuration    |      0.147   |      0.170   |     +0.410             |     0.5732
+QTInterval     |      0.317   |      0.313   |     -0.047             |     0.5290
+STSegment      |     -0.038   |     -0.084   |     -0.256             |     0.5348
+HRV            |      0.070   |      0.183   |     +1.096             |     0.7656
+PAmplitude     |      0.114   |      0.056   |     -0.986             |     0.5469
+RAmplitude     |      1.469   |      0.816   |     -0.736             |     0.6148
+TAmplitude     |      0.146   |      0.197   |     +0.123             |     0.5513
+
+------------------------------------------------------------------------------
+5. SUBSET MODELING COMPARISON: TIMING vs MORPHOLOGY vs MISSINGNESS SHORTCUTS
+------------------------------------------------------------------------------
+Feature Subset Evaluated                               | Val ROC AUC  | Val F1-Score
+------------------------------------------------------------------------------------
+Timing Features Only (HR, RR, HRV)                     |     0.9227   |     0.6454
+Morphology Features Only (QRS, ST, P, R, T)            |     0.5071   |     0.0724
+All 10 Continuous Features                             |     0.8478   |     0.5123
+Missingness Indicators ONLY (P_Valid, PR_Valid, etc.)  |     0.7364   |     0.3530
+Full Feature Set (10 Features + 6 Missingness Indicators) |     0.8254   |     0.5123
+
+------------------------------------------------------------------------------
+6. SHORTCUT LEARNING ASSESSMENT: CAN THE MODEL EXPLOIT MISSINGNESS?
+------------------------------------------------------------------------------
+Findings on Missingness as a Feature:
+  * P_Valid rate : Class 0 = 66.2%, Class 1 = 22.0% (Missing in 78.0% of Class 1!)
+  * PR_Valid rate: Class 0 = 65.9%, Class 1 = 14.6% (Missing in 85.4% of Class 1!)
+  * SHORTCUT RISK: In an unregularized Decision Tree, splitting on 'PR_Valid == 0' or
+    'P_Valid == 0' immediately isolates a massive fraction of Class 1 beats (PVCs).
+  * However, relying SOLELY on missingness fails in two critical clinical scenarios:
+      1. False Positives: Noisy sinus beats, baseline wander, or lead vector orientation
+         where P-wave is isoelectric (Class 0) would be misclassified as Class 1!
+      2. False Negatives: Premature Atrial Contractions (PACs, symbol 'A' in Class 1)
+         frequently DO have P-waves (abnormal morphology) and would be missed!
+  * CONCLUSION: The model MUST combine timing prematurity (RR/HR), morphology
+    (QRS duration widening, ST shift), and missingness signals simultaneously.
+    Tree depth regularization and feature subsampling (Random Forest max_features='sqrt')
+    are essential to force the ensemble to evaluate morphology alongside timing.

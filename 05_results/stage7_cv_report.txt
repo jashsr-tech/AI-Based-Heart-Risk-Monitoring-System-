@@ -1,0 +1,36 @@
+========================================================================
+ECG FINAL PRO — STAGE 7: RECORD-GROUPED 5-FOLD CROSS-VALIDATION
+========================================================================
+Training Set: 41,472 beats across 38 records.
+Setting up 5-Fold GroupKFold partitioned strictly by Record...
+
+Fold 1: 30 train recs, 8 val recs
+  Acc:  90.13% | Bal Acc:  90.32% | Sens:  80.73% | Spec:  99.90% | F1:  89.29%
+
+Fold 2: 31 train recs, 7 val recs
+  Acc:  50.44% | Bal Acc:  51.50% | Sens:  98.34% | Spec:   4.66% | F1:  65.97%
+
+Fold 3: 30 train recs, 8 val recs
+  Acc:  38.58% | Bal Acc:  39.20% | Sens:  78.40% | Spec:   0.00% | F1:  55.68%
+
+Fold 4: 30 train recs, 8 val recs
+  Acc:  55.01% | Bal Acc:  55.13% | Sens:  77.24% | Spec:  33.03% | F1:  63.06%
+
+Fold 5: 31 train recs, 7 val recs
+  Acc:  56.48% | Bal Acc:  56.24% | Sens:  87.83% | Spec:  24.65% | F1:  67.03%
+
+------------------------------------------------------------------------
+RECORD-GROUPED 5-FOLD CV SUMMARY (MEAN +/- STD)
+------------------------------------------------------------------------
+  Accuracy          :  58.13% +/- 17.19%
+  Balanced Accuracy :  58.48% +/- 17.03%
+  Sensitivity (Abn) :  84.51% +/-  7.83%
+  Specificity (Norm):  32.45% +/- 35.88%
+  F1-Score (Abn)    :  68.21% +/- 11.26%
+
+Saved cross-validation results to: C:\Users\srjas\OneDrive\Desktop\ECG FINAL PROJ\05_results\stage7_cv_results.json
+
+========================================================================
+STAGE 7 RESULT: PASSED
+Record-grouped cross-validation completed. Ready for Stage 8 (Independent Test Evaluation).
+========================================================================

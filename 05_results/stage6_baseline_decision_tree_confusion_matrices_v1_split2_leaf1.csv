@@ -1,0 +1,9 @@
+Experiment_ID,Model_Variant,TN,FP,FN,TP,Class0_Total,Class1_Total,Class0_Accuracy_Pct,Class1_Accuracy_Pct,False_Positive_Rate_Pct,False_Negative_Rate_Pct
+Exp_A_Timing_Only,Balanced,11037,2272,229,1811,13309,2040,82.93,88.77,17.07,11.23
+Exp_A_Timing_Only,Legacy_Unweighted,12724,585,1361,679,13309,2040,95.6,33.28,4.4,66.72
+Exp_B_Morphology_Only,Balanced,9775,3534,1003,1037,13309,2040,73.45,50.83,26.55,49.17
+Exp_B_Morphology_Only,Legacy_Unweighted,11427,1882,1617,423,13309,2040,85.86,20.74,14.14,79.26
+Exp_C_Combined_No_Indicators,Balanced,10761,2548,803,1237,13309,2040,80.86,60.64,19.14,39.36
+Exp_C_Combined_No_Indicators,Legacy_Unweighted,11782,1527,1084,956,13309,2040,88.53,46.86,11.47,53.14
+Exp_D_Combined_With_Indicators,Balanced,10694,2615,289,1751,13309,2040,80.35,85.83,19.65,14.17
+Exp_D_Combined_With_Indicators,Legacy_Unweighted,11791,1518,1262,778,13309,2040,88.59,38.14,11.41,61.86

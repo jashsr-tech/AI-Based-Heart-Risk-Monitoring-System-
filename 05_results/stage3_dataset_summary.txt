@@ -1,0 +1,25 @@
+==============================================================================
+ECG FINAL PRO — STAGE 3 EXECUTION SUMMARY
+==============================================================================
+Execution Time: 17.7 seconds
+Total MIT-BIH Recordings Processed: 48
+Total MIT-BIH Subjects Represented: 47
+Total Beats in Mapped Dataset     : 101,425
+Total Excluded Annotations Audited: 11,222
+
+Partition Breakdown:
+  * Train_Dev        : 66,679 beats (30 subjects)
+  * Validation       : 15,349 beats (7 subjects)
+  * Independent_Test : 19,397 beats (10 subjects)
+
+Class Breakdown across Dataset:
+  * Class 0 (AAMI Non-Ectopic) : 90,605 beats (89.33%)
+  * Class 1 (Selected Non-Normal): 10,820 beats (10.67%)
+
+LEAKAGE PREVENTION CERTIFICATION:
+  1. Subject_201_202 (Records 201 and 202) is co-assigned strictly to Train_Dev.
+  2. All 14 Stage 2 exploratory subjects are co-assigned strictly to Train_Dev.
+  3. Independent_Test contains ONLY genuinely unseen subjects (10 subjects, 0 overlap).
+  4. Feature extraction parameters were FROZEN before running on any partition.
+  5. No model has been trained or evaluated.
+==============================================================================

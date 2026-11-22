@@ -1,0 +1,134 @@
+==============================================================================
+ECG FINAL PRO — STAGE 4: FEATURE VALIDATION & K=10 HRV REGENERATION
+==============================================================================
+
+Loading original Stage 3 dataset: C:\Users\srjas\OneDrive\Desktop\ECG FINAL PROJ\04_machine_learning\mitbih_beat_features_mapped.csv...
+Loaded 101,425 beats across 48 records / 47 subjects.
+
+1. HRV METHODOLOGY CORRECTION (K=10 Sample SDNN with M - 1 Denominator):
+   Formula: HRV_i = sqrt( (1 / (M - 1)) * sum_{j=0}^{M-1} (RR_{i-j} - mean_RR_i)^2 )
+   Units: Seconds (s), representing sample standard deviation (SDNN), NOT variance (s^2).
+   Window size: K = 10 preceding valid intervals. Minimum gating: M >= 3 beats.
+   Ectopic intervals included -> represents local rhythm perturbation / dispersion.
+   Causality certified: zero future intervals accessed (only intervals up to beat i used).
+
+Saving updated dataset (V2 with K=10 HRV) to: C:\Users\srjas\OneDrive\Desktop\ECG FINAL PROJ\04_machine_learning\mitbih_beat_features_mapped_v2_k10.csv...
+[PASS] Original dataset preserved; V2 dataset created successfully.
+
+HRV Metric Comparison (K=5 Population vs K=10 Sample SDNN):
+  * K=5  Population SDNN : Mean = 0.0818 s | Median = 0.0331 s | Std = 0.1091
+  * K=10 Sample SDNN     : Mean = 0.0989 s | Median = 0.0506 s | Std = 0.1160
+  * Class 0 HRV Mean     : 0.0845 s (Median: 0.0414 s)
+  * Class 1 HRV Mean     : 0.2191 s (Median: 0.1689 s)
+
+------------------------------------------------------------------------------
+2. DETERMINISTIC CONSISTENCY CHECKS
+------------------------------------------------------------------------------
+  * Identity Check (HeartRate == 60.0 / RRInterval): 100.00% exact match across 101,403 beats (Max relative diff: 0.0419% due to 4-decimal CSV float rounding).
+  * HRV Non-Negativity Check (HRV >= 0.0): PASS
+
+------------------------------------------------------------------------------
+3. SUSPICIOUS VALUE SCREENING & AUDIT (No Automatic Deletions)
+------------------------------------------------------------------------------
+Auditing all 101,425 beats against physiological reference bounds...
+Total suspicious feature instances identified: 29,443 instances across 48 records.
+
+Suspicious Value Breakdown by Feature:
+Feature        | Expected Range   | Suspicious Count   | Pct of Valid Feature  
+------------------------------------------------------------------------------
+RRInterval     | [ 0.30,  2.00]   |    994 instances    |  0.98%
+HeartRate      | [30.00, 200.00]   |    972 instances    |  0.96%
+QRSDuration    | [ 0.06,  0.22]   | 12,516 instances    | 13.50%
+PRInterval     | [ 0.10,  0.28]   |  2,128 instances    |  3.47%
+QTInterval     | [ 0.20,  0.55]   |  3,443 instances    |  3.82%
+STSegment      | [-0.80,  0.80]   |    220 instances    |  0.28%
+PAmplitude     | [ 0.00,  0.40]   |     10 instances    |  0.02%
+RAmplitude     | [ 0.20,  3.50]   |  7,758 instances    |  7.65%
+TAmplitude     | [-1.50,  1.50]   |    194 instances    |  0.26%
+HRV            | [ 0.00,  0.50]   |  1,208 instances    |  1.19%
+
+Suspicious Value Breakdown by Class Label:
+  * Class 0 (AAMI Non-Ectopic) : 22,204 instances (75.4%)
+  * Class 1 (Selected Non-Normal): 7,239 instances (24.6%)
+  * Important Biomedical Clarification:
+    These reference ranges are ENGINEERING AUDIT THRESHOLDS, NOT universal clinical limits.
+    Values falling outside these bounds (e.g. ST > 0.8mV, R > 3.5mV) must NOT be interpreted
+    as proof of acute myocardial ischemia, left ventricular hypertrophy (LVH), or pathology.
+    In single-lead ambulatory Holter recordings, electrode positioning, chest geometry,
+    torso impedance, baseline wander, and postural axis shifts frequently shift voltages.
+    These values are documented only as possible physiological or signal-related phenomena.
+  * Preservation Policy: ZERO suspicious values have been deleted, clipped, or fabricated.
+    Every beat retains its true measured values in the dataset.
+
+Saved detailed suspicious values report to: C:\Users\srjas\OneDrive\Desktop\ECG FINAL PROJ\05_results\stage4_suspicious_values_report.csv
+
+------------------------------------------------------------------------------
+4. DATASET COLUMN AUDIT (25 COLUMNS IN V2 DATASET)
+------------------------------------------------------------------------------
+Audit of 25 Columns in 'mitbih_beat_features_mapped_v2_k10.csv':
+  * Explanation of 25th Column: Stage 3 contained 24 columns. To ensure complete
+    auditability and mathematical reproducibility without destroying historical data,
+    the original K=5 population HRV was preserved as 'HRV_K5_Old' (+1 column),
+    while 'HRV' was updated to K=10 sample SDNN. Total columns = 24 + 1 = 25.
+
+Complete Column Categorization:
+  Group 1: 9 Numerical ML Features (Inputs to Machine Learning Models):
+     1. RRInterval      (float, s) : Preceding RR interval (s_i - s_{i-1})/fs. Primary timing feature.
+     2. HRV             (float, s) : K=10 rolling sample standard deviation (SDNN). Rhythm dispersion.
+     3. QRSDuration     (float, s) : Depolarization width (t_S - t_Q). Hallmark of ventricular ectopy.
+     4. QTInterval      (float, s) : Total ventricular activation/recovery duration (t_Tend - t_Q).
+     5. STSegment       (float, mV): Early repolarization amplitude at J + 60 ms relative to PR baseline.
+     6. PRInterval      (float, s) : AV conduction time (t_R - t_P_onset). NaN when P-wave unidentifiable.
+     7. PAmplitude      (float, mV): Peak atrial depolarization voltage. NaN when unidentifiable.
+     8. RAmplitude      (float, mV): Peak dominant ventricular depolarization voltage.
+     9. TAmplitude      (float, mV): Peak ventricular repolarization voltage.
+
+  Group 2: 6 Missingness Indicators (Boolean 0/1 Inputs for Experiments C/D):
+    10. P_Valid         (int: 0/1) : 1 if P-peak detected; 0 if unidentifiable / NaN.
+    11. PR_Valid        (int: 0/1) : 1 if PR interval valid; 0 if unidentifiable / NaN.
+    12. QRS_Valid       (int: 0/1) : 1 if QRS duration valid; 0 if unidentifiable / NaN.
+    13. ST_Valid        (int: 0/1) : 1 if ST segment valid; 0 if unidentifiable / NaN.
+    14. QT_Valid        (int: 0/1) : 1 if QT interval valid; 0 if unidentifiable / NaN.
+    15. Baseline_Valid  (int: 0/1) : 1 if dynamic isoelectric PR baseline certified; 0 if NaN.
+
+  Group 3: 9 Metadata, Identifiers & Non-ML Columns (STRICTLY EXCLUDED from Feature Matrix X):
+    16. Record          (int)      : Tape identifier (100 to 234). EXCLUDED to prevent patient leakage.
+    17. Subject_ID      (str)      : Verified subject ID (Subject_100 to Subject_234). EXCLUDED from ML.
+    18. Partition       (str)      : Data partition (Train_Dev, Validation, Independent_Test). EXCLUDED.
+    19. Sample_Idx      (int)      : Raw signal sample offset at 360 Hz. EXCLUDED to prevent temporal memorization.
+    20. R_Time          (float, s) : Elapsed time coordinate from start of tape. EXCLUDED from ML.
+    21. Annotation_Symbol(str)     : Original MIT-BIH cardiologist beat symbol. EXCLUDED to prevent label leakage.
+    22. AAMI_Class      (str)      : Intermediate AAMI category (N, S, V, F). EXCLUDED from ML.
+    23. HeartRate       (float, bpm): 60.0 / RRInterval. EXCLUDED from ML to eliminate rho = -1.0 redundancy.
+    24. HRV_K5_Old      (float, s) : Legacy Stage 3 K=5 population HRV. EXCLUDED from ML (audit reference only).
+
+  Group 4: 1 Target Column (Supervised Label):
+    25. Label           (int: 0/1) : Binary classification target (0 = AAMI N; 1 = AAMI S, V, F). NEVER an input.
+
+  Data Leakage Prevention Certification:
+    * Zero Label Leakage: Label, AAMI_Class, Annotation_Symbol are excluded from X.
+    * Zero Subject Leakage: Record, Subject_ID, Partition are excluded from X.
+    * Zero Spatiotemporal Leakage: Sample_Idx, R_Time are excluded from X.
+    * Zero Mathematical Collinearity: HeartRate is excluded from X.
+    * Clean Input Dimensions: X has 2 features (Timing), 7 features (Morphology), 9 features (Combined No Ind), or 15 features (Combined With Ind).
+
+  RR Interval Temporal Causality Certification:
+    * For every beat i, RRInterval = (s_i - s_{i-1}) / fs, strictly using the PRECEDING beat interval.
+    * The subsequent interval (s_{i+1} - s_i) / fs occurs in the future and is NEVER an input feature.
+    * HRV buffer only collects preceding intervals {RR_i, RR_{i-1}, ..., RR_{i-M+1}} (strict lookback).
+
+------------------------------------------------------------------------------
+5. FOUR-WAY MODEL COMPARISON EVALUATION DESIGN (Prepared for Stages 7–10)
+------------------------------------------------------------------------------
+To rigorously prevent shortcut learning and quantify feature contributions,
+the upcoming modeling stages will systematically evaluate 4 distinct configurations:
+  Experiment A: Timing-Only Features [RRInterval, HRV]
+  Experiment B: Morphology-Only Features [QRS, QT, ST, PR, P_amp, R_amp, T_amp]
+  Experiment C: Combined Features WITHOUT Missingness Indicators [9 Numerical Features]
+  Experiment D: Combined Features WITH Missingness Indicators [9 Numerical + 6 Indicators]
+
+Partition Discipline:
+  - Model Fitting / Training : Strictly Train_Dev partition (30 subjects, 66,679 beats).
+  - Model Selection / Tuning : Strictly Validation partition (7 subjects, 15,349 beats).
+  - Final Independent Test   : Strictly Independent_Test partition (10 subjects, 19,397 beats).
+    Held completely untouched until Stage 10. Zero validation leakage.

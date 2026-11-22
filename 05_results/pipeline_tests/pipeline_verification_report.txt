@@ -1,0 +1,264 @@
+========================================================================
+ECG FINAL PRO — PHASE 2 PIPELINE VERIFICATION REPORT
+========================================================================
+Execution Timestamp: 2026-10-28 13:56:28.086566
+Python Version     : 3.12.10
+
+SCIENTIFIC NOTICE & DISCLAIMERS:
+1. All evaluated signals are controlled synthetic demonstration waveforms.
+2. The ML model was trained on beat-level MIT-BIH rows; feature extraction
+   here aggregates across the window. Predictions on aggregate features
+   represent software scoring, not clinically validated diagnostic evidence.
+========================================================================
+
+--- TEST 1: NORMAL SYNTHETIC ECG (60s) ---
+========================================================================
+ECG FINAL PRO — PIPELINE ANALYSIS REPORT
+========================================================================
+Status               : SUCCESS
+Sampling Rate        : 360.0 Hz
+Signal Duration      : 60.00 s (21600 samples)
+Detected R-Peaks     : 71 beats
+Mean RR Interval     : 0.8343 s
+Estimated Heart Rate : 71.91 BPM
+Heart Rate Variability (SDNN) : 51.57 ms
+
+------------------------------------------------------------------------
+EXTRACTED 10-FEATURE VECTOR (STAGE 2E COMPLIANT)
+------------------------------------------------------------------------
+  HeartRate      :    71.914388  [BPM]
+  RRInterval     :     0.834325  [s]
+  PRInterval     :     0.160172  [s]
+  QRSDuration    :     0.075469  [s]
+  QTInterval     :     0.335603  [s]
+  STSegment      :    -0.287438  [arb. amp (S+60ms)]
+  HRV            :     0.051568  [s (SDNN)]
+  PAmplitude     :     0.312548  [arb. amp]
+  RAmplitude     :     4.138241  [arb. amp]
+  TAmplitude     :     0.712562  [arb. amp]
+
+------------------------------------------------------------------------
+EXPLORATORY MACHINE LEARNING CLASSIFICATION
+------------------------------------------------------------------------
+Predicted Class      : NORMAL (Label 0)
+Class Probabilities  :
+  - Label 0 (NORMAL  ):  93.60%
+  - Label 1 (ABNORMAL):   6.40%
+
+------------------------------------------------------------------------
+DECISION TREE PATH EXPLANATION (KEY RULES)
+------------------------------------------------------------------------
+  * Rule 1: HRV <= 0.2022 (scaled: -0.0823) (Input raw: 0.0516)
+  * Rule 2: HeartRate <= 89.4414 (scaled: 0.8166) (Input raw: 71.9144)
+  * Rule 3: PRInterval > 0.0708 (scaled: -1.1290) (Input raw: 0.1602)
+  * Rule 4: QTInterval > 0.2792 (scaled: -0.9655) (Input raw: 0.3356)
+  * Rule 5: STSegment > -1.6645 (scaled: -1.8431) (Input raw: -0.2874)
+  * Rule 6: HeartRate > 66.9769 (scaled: -0.4487) (Input raw: 71.9144)
+  * Rule 7: HRV > 0.0497 (scaled: -0.1606) (Input raw: 0.0516)
+  * Rule 8: HRV <= 0.1270 (scaled: -0.1209) (Input raw: 0.0516)
+  * Rule 9: QRSDuration <= 0.0792 (scaled: -0.0078) (Input raw: 0.0755)
+  * Rule 10: RRInterval > 0.7653 (scaled: -0.1832) (Input raw: 0.8343)
+  * Final Leaf 116: 1 training beats reached leaf (93.6% Normal, 6.4% Abnormal).
+
+------------------------------------------------------------------------
+METHODOLOGICAL LIMITATIONS & DISCLAIMERS
+------------------------------------------------------------------------
+  - This exploratory analysis is for engineering demonstration, not medical diagnosis.
+  - The classifier was trained on beat-level rows; features here are aggregated window averages.
+  - Aggregating normal beats with premature beats dilutes morphological metrics.
+========================================================================
+
+Ground-Truth Peak Comparison (Normal):
+  Ground-truth beats : 71
+  Detected beats     : 71
+  Matched beats      : 71
+  Missed beats       : 0
+  False positives    : 0
+    - P_mae_ms       : 0.649 ms
+    - P_max_ae_ms    : 1.111 ms
+    - Q_mae_ms       : 0.736 ms
+    - Q_max_ae_ms    : 1.667 ms
+    - R_mae_ms       : 0.649 ms
+    - R_max_ae_ms    : 1.111 ms
+    - S_mae_ms       : 0.657 ms
+    - S_max_ae_ms    : 1.667 ms
+    - T_mae_ms       : 0.806 ms
+    - T_max_ae_ms    : 2.778 ms
+
+========================================================================
+--- TEST 2: SIMULATED PVC-LIKE ECG (60s) ---
+========================================================================
+ECG FINAL PRO — PIPELINE ANALYSIS REPORT
+========================================================================
+Status               : SUCCESS
+Sampling Rate        : 360.0 Hz
+Signal Duration      : 60.00 s (21600 samples)
+Detected R-Peaks     : 71 beats
+Mean RR Interval     : 0.8333 s
+Estimated Heart Rate : 72.00 BPM
+Heart Rate Variability (SDNN) : 240.65 ms
+
+------------------------------------------------------------------------
+EXTRACTED 10-FEATURE VECTOR (STAGE 2E COMPLIANT)
+------------------------------------------------------------------------
+  HeartRate      :    72.000000  [BPM]
+  RRInterval     :     0.833333  [s]
+  PRInterval     :     0.159077  [s]
+  QRSDuration    :     0.090336  [s]
+  QTInterval     :     0.360407  [s]
+  STSegment      :    -0.289449  [arb. amp (S+60ms)]
+  HRV            :     0.240653  [s (SDNN)]
+  PAmplitude     :     0.474409  [arb. amp]
+  RAmplitude     :     4.130789  [arb. amp]
+  TAmplitude     :     0.544913  [arb. amp]
+
+------------------------------------------------------------------------
+EXPLORATORY MACHINE LEARNING CLASSIFICATION
+------------------------------------------------------------------------
+Predicted Class      : ABNORMAL (Label 1)
+Class Probabilities  :
+  - Label 0 (NORMAL  ):   0.00%
+  - Label 1 (ABNORMAL): 100.00%
+
+------------------------------------------------------------------------
+DECISION TREE PATH EXPLANATION (KEY RULES)
+------------------------------------------------------------------------
+  * Rule 1: HRV > 0.2022 (scaled: -0.0823) (Input raw: 0.2407)
+  * Rule 2: HRV <= 0.4950 (scaled: 0.0680) (Input raw: 0.2407)
+  * Final Leaf 181: 1 training beats reached leaf (0.0% Normal, 100.0% Abnormal).
+
+------------------------------------------------------------------------
+METHODOLOGICAL LIMITATIONS & DISCLAIMERS
+------------------------------------------------------------------------
+  - This exploratory analysis is for engineering demonstration, not medical diagnosis.
+  - The classifier was trained on beat-level rows; features here are aggregated window averages.
+  - Aggregating normal beats with premature beats dilutes morphological metrics.
+========================================================================
+
+Ground-Truth Peak Comparison (PVC):
+  Ground-truth beats : 71
+  Detected beats     : 71
+  Matched beats      : 71
+  Missed beats       : 0
+  False positives    : 0
+    - P_mae_ms       : 1.287 ms
+    - P_max_ae_ms    : 1.667 ms
+    - Q_mae_ms       : 2.316 ms
+    - Q_max_ae_ms    : 7.222 ms
+    - R_mae_ms       : 0.548 ms
+    - R_max_ae_ms    : 2.778 ms
+    - S_mae_ms       : 2.535 ms
+    - S_max_ae_ms    : 7.778 ms
+    - T_mae_ms       : 21.197 ms
+    - T_max_ae_ms    : 106.111 ms
+
+========================================================================
+--- TEST 3: VARIABLE LENGTH TEST (10.0s Short ECG) ---
+========================================================================
+ECG FINAL PRO — PIPELINE ANALYSIS REPORT
+========================================================================
+Status               : SUCCESS
+Sampling Rate        : 360.0 Hz
+Signal Duration      : 10.00 s (3600 samples)
+Detected R-Peaks     : 11 beats
+Mean RR Interval     : 0.8464 s
+Estimated Heart Rate : 70.89 BPM
+Heart Rate Variability (SDNN) : 52.43 ms
+
+------------------------------------------------------------------------
+EXTRACTED 10-FEATURE VECTOR (STAGE 2E COMPLIANT)
+------------------------------------------------------------------------
+  HeartRate      :    70.889399  [BPM]
+  RRInterval     :     0.846389  [s]
+  PRInterval     :     0.160354  [s]
+  QRSDuration    :     0.075253  [s]
+  QTInterval     :     0.335606  [s]
+  STSegment      :    -0.287134  [arb. amp (S+60ms)]
+  HRV            :     0.052428  [s (SDNN)]
+  PAmplitude     :     0.322810  [arb. amp]
+  RAmplitude     :     4.143189  [arb. amp]
+  TAmplitude     :     0.710493  [arb. amp]
+
+------------------------------------------------------------------------
+EXPLORATORY MACHINE LEARNING CLASSIFICATION
+------------------------------------------------------------------------
+Predicted Class      : NORMAL (Label 0)
+Class Probabilities  :
+  - Label 0 (NORMAL  ):  93.60%
+  - Label 1 (ABNORMAL):   6.40%
+
+------------------------------------------------------------------------
+DECISION TREE PATH EXPLANATION (KEY RULES)
+------------------------------------------------------------------------
+  * Rule 1: HRV <= 0.2022 (scaled: -0.0823) (Input raw: 0.0524)
+  * Rule 2: HeartRate <= 89.4414 (scaled: 0.8166) (Input raw: 70.8894)
+  * Rule 3: PRInterval > 0.0708 (scaled: -1.1290) (Input raw: 0.1604)
+  * Rule 4: QTInterval > 0.2792 (scaled: -0.9655) (Input raw: 0.3356)
+  * Rule 5: STSegment > -1.6645 (scaled: -1.8431) (Input raw: -0.2871)
+  * Rule 6: HeartRate > 66.9769 (scaled: -0.4487) (Input raw: 70.8894)
+  * Rule 7: HRV > 0.0497 (scaled: -0.1606) (Input raw: 0.0524)
+  * Rule 8: HRV <= 0.1270 (scaled: -0.1209) (Input raw: 0.0524)
+  * Rule 9: QRSDuration <= 0.0792 (scaled: -0.0078) (Input raw: 0.0753)
+  * Rule 10: RRInterval > 0.7653 (scaled: -0.1832) (Input raw: 0.8464)
+  * Final Leaf 116: 1 training beats reached leaf (93.6% Normal, 6.4% Abnormal).
+
+------------------------------------------------------------------------
+METHODOLOGICAL LIMITATIONS & DISCLAIMERS
+------------------------------------------------------------------------
+  - This exploratory analysis is for engineering demonstration, not medical diagnosis.
+  - The classifier was trained on beat-level rows; features here are aggregated window averages.
+  - Aggregating normal beats with premature beats dilutes morphological metrics.
+========================================================================
+
+========================================================================
+INVESTIGATION: PVC QRS-DURATION DISCREPANCY (135 ms vs 90.3 ms)
+========================================================================
+Question: Why does a PVC with ~135 ms design width yield an aggregate QRS of ~90.3 ms?
+
+FINDINGS & MATHEMATICAL EVIDENCE:
+1. Per-Beat Measurement Verification:
+                   count        mean  median    min         max           std
+BeatType                                                                     
+Normal Sinus Beat     57   75.682261    75.0   75.0   77.777778  1.206325e+00
+PVC Ectopic Beat      14  150.000000   150.0  150.0  150.000000  1.479232e-12
+
+2. Overall Window Arithmetic Mean: 90.34 ms
+   - Normal Beats Count : 57 beats with mean QRS = 75.68 ms
+   - PVC Ectopic Count  : 14 beats with mean QRS = 150.00 ms
+
+   Mathematical Proof of Dilution:
+   Aggregated QRS = (57 * 75.68 ms + 14 * 150.00 ms) / 71
+                  = (4313.9 + 2100.0) / 71
+                  = 90.34 ms
+
+3. Root Cause Conclusion:
+   - The detector and search window DID NOT miss the wide PVC complex.
+   - The per-beat detector successfully measured individual PVC QRS durations at ~150 ms.
+   - The aggregated 10-feature vector averages all 71 beats in the 60-second window,
+     causing the 80% majority of normal narrow beats (~75 ms) to mathematically dilute
+     the 20% minority of wide PVC beats (~150 ms) down to 90.3 ms.
+
+4. Search Window Boundary Assessment:
+   - Current Q window (-0.075 to -0.015 s) and S window (+0.015 to +0.085 s) span a maximum
+     detectable QRS duration of 160 ms. The PVC beat S-peak occurred at +0.0806 s, which is
+     very near the upper limit of the S-window (+0.085 s). If a wider PVC (>160 ms) were input,
+     the S window would truncate and require an adaptive window.
+========================================================================
+
+========================================================================
+INVESTIGATION: TRAINING DATA GRANULARITY MISMATCH
+========================================================================
+Core Finding:
+- The dataset (ecg_features_balanced_clean_labeled.csv) contains beat-level rows,
+  where each row represents features extracted from one individual heartbeat.
+- In contrast, current pipeline feature extraction (Stage 2E) computes summary averages
+  across an entire multi-beat window (e.g. 60 seconds).
+
+Implications for Model Validation:
+1. Averaging heterogeneous beats (e.g. 80% normal + 20% PVC) creates a synthetic composite
+   feature vector that does not represent any actual physiological heartbeat.
+2. When the composite vector is fed into a beat-level classifier, the prediction reflects
+   how the average numbers happen to land in the tree, not a validated diagnosis of the rhythm.
+3. In the viva/presentation, the system should be described as an 'exploratory beat-pattern
+   and rhythm scoring prototype' rather than a validated clinical diagnostic system.
+========================================================================

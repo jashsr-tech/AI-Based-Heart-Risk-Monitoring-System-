@@ -1,0 +1,11 @@
+Feature,Value,Unit_or_definition
+HeartRate,71.91438763376932,BPM
+RRInterval,0.8343253968253969,seconds
+PRInterval,0.16017214397496105,"P peak to R peak, seconds"
+QRSDuration,0.09229264475743311,"Q peak to S peak, seconds"
+QTInterval,0.35105633802816855,"Q peak to T peak, seconds"
+STSegment,-0.314474832295633,"Filtered amplitude 60 ms after S, arbitrary units"
+HRV,0.051567910124413766,"SDNN of detected RR intervals, seconds"
+PAmplitude,0.2857117063797405,"Filtered amplitude, arbitrary units"
+RAmplitude,4.1588263403777725,"Filtered amplitude, arbitrary units"
+TAmplitude,0.6856834369427476,"Filtered amplitude, arbitrary units"

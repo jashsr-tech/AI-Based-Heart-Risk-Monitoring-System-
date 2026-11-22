@@ -1,0 +1,93 @@
+{
+  "model": "RandomForestClassifier",
+  "test_accuracy": 0.6642882004872955,
+  "balanced_accuracy": 0.6633350515164117,
+  "sensitivity_recall": 0.7415749656121046,
+  "specificity": 0.5850951374207188,
+  "precision": 0.6468206358728255,
+  "f1_score": 0.6909644344761294,
+  "roc_auc": 0.7369412633419703,
+  "pr_auc": 0.8242848819860351,
+  "confusion_matrix": [
+    [
+      3321,
+      2355
+    ],
+    [
+      1503,
+      4313
+    ]
+  ],
+  "per_record_performance": [
+    {
+      "Record": 100,
+      "Label": 0,
+      "TotalBeats": 2272,
+      "CorrectBeats": 1557,
+      "Accuracy": 68.52992957746478
+    },
+    {
+      "Record": 104,
+      "Label": 1,
+      "TotalBeats": 826,
+      "CorrectBeats": 569,
+      "Accuracy": 68.8861985472155
+    },
+    {
+      "Record": 108,
+      "Label": 1,
+      "TotalBeats": 400,
+      "CorrectBeats": 400,
+      "Accuracy": 100.0
+    },
+    {
+      "Record": 113,
+      "Label": 0,
+      "TotalBeats": 1792,
+      "CorrectBeats": 1730,
+      "Accuracy": 96.54017857142857
+    },
+    {
+      "Record": 118,
+      "Label": 1,
+      "TotalBeats": 869,
+      "CorrectBeats": 14,
+      "Accuracy": 1.611047180667434
+    },
+    {
+      "Record": 124,
+      "Label": 0,
+      "TotalBeats": 1612,
+      "CorrectBeats": 34,
+      "Accuracy": 2.109181141439206
+    },
+    {
+      "Record": 213,
+      "Label": 1,
+      "TotalBeats": 1245,
+      "CorrectBeats": 1233,
+      "Accuracy": 99.03614457831326
+    },
+    {
+      "Record": 220,
+      "Label": 1,
+      "TotalBeats": 736,
+      "CorrectBeats": 357,
+      "Accuracy": 48.505434782608695
+    },
+    {
+      "Record": 223,
+      "Label": 1,
+      "TotalBeats": 832,
+      "CorrectBeats": 832,
+      "Accuracy": 100.0
+    },
+    {
+      "Record": 233,
+      "Label": 1,
+      "TotalBeats": 908,
+      "CorrectBeats": 908,
+      "Accuracy": 100.0
+    }
+  ]
+}

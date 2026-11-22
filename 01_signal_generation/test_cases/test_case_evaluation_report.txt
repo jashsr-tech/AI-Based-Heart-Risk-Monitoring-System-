@@ -1,0 +1,60 @@
+========================================================================
+ECG FINAL PRO — DEMONSTRATION TEST CASES EVALUATION REPORT
+========================================================================
+Evaluation Date: 2026-10-28 13:46:58.805765
+Models Location: C:\Users\srjas\OneDrive\Desktop\ECG FINAL PROJ\04_machine_learning\models
+
+NOTE: All signals are synthetic test waveforms for technical demonstration.
+They are not clinical diagnostic evaluations.
+========================================================================
+
+TEST CASE: Case A: Normal Synthetic
+R-peak min distance: 0.4 s
+Detected beats: 71
+Model Prediction: NORMAL (Class 0)
+Class Probabilities: Normal=93.60%, Abnormal=6.40%
+Features:
+  HeartRate      : 71.914388
+  RRInterval     : 0.834325
+  PRInterval     : 0.160172
+  QRSDuration    : 0.075469
+  QTInterval     : 0.335603
+  STSegment      : -0.287438
+  HRV            : 0.051568
+  PAmplitude     : 0.312548
+  RAmplitude     : 4.138241
+  TAmplitude     : 0.712562
+
+TEST CASE: Case B: Simulated PVC (Adaptive Peak Detector)
+R-peak min distance: 0.4 s
+Detected beats: 71
+Model Prediction: ABNORMAL (Class 1)
+Class Probabilities: Normal=0.00%, Abnormal=100.00%
+Features:
+  HeartRate      : 72.000000
+  RRInterval     : 0.833333
+  PRInterval     : 0.159077
+  QRSDuration    : 0.090336
+  QTInterval     : 0.360407
+  STSegment      : -0.289449
+  HRV            : 0.240653
+  PAmplitude     : 0.474409
+  RAmplitude     : 4.130789
+  TAmplitude     : 0.544913
+
+TEST CASE: Case B: Simulated PVC (Strict 0.60s Detector)
+R-peak min distance: 0.6 s
+Detected beats: 57
+Model Prediction: ABNORMAL (Class 1)
+Class Probabilities: Normal=0.00%, Abnormal=100.00%
+Features:
+  HeartRate      : 57.600000
+  RRInterval     : 1.041667
+  PRInterval     : 0.160234
+  QRSDuration    : 0.075682
+  QTInterval     : 0.336355
+  STSegment      : -0.258282
+  HRV            : 0.364110
+  PAmplitude     : 0.348857
+  RAmplitude     : 4.176428
+  TAmplitude     : 0.759007

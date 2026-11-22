@@ -1,0 +1,11 @@
+Feature,Class_0_Missing,Class_0_Pct,Class_1_Missing,Class_1_Pct,Delta_Pct
+HeartRate,19,0.02,3,0.03,0.01
+RRInterval,0,0.0,0,0.0,0.0
+PRInterval,30901,34.11,9243,85.43,51.32
+QRSDuration,4668,5.15,4026,37.21,32.06
+QTInterval,8216,9.07,3050,28.19,19.12
+STSegment,19042,21.02,3820,35.3,14.29
+HRV,85,0.09,11,0.1,0.01
+PAmplitude,44998,49.66,9392,86.8,37.14
+RAmplitude,0,0.0,0,0.0,0.0
+TAmplitude,21471,23.7,4355,40.25,16.55

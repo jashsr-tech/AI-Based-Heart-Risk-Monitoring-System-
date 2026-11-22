@@ -1,0 +1,75 @@
+{
+  "n_folds": 5,
+  "fold_details": [
+    {
+      "fold": 1,
+      "train_beats": 33249,
+      "val_beats": 8223,
+      "train_records_count": 30,
+      "val_records_count": 8,
+      "accuracy": 0.9012525842150066,
+      "balanced_accuracy": 0.9031526607917366,
+      "sensitivity": 0.8072978774147388,
+      "specificity": 0.9990074441687344,
+      "f1_score": 0.8929042469005539
+    },
+    {
+      "fold": 2,
+      "train_beats": 33339,
+      "val_beats": 8133,
+      "train_records_count": 31,
+      "val_records_count": 7,
+      "accuracy": 0.5043649329890569,
+      "balanced_accuracy": 0.5150189383190789,
+      "sensitivity": 0.9833920483140413,
+      "specificity": 0.04664582832411637,
+      "f1_score": 0.6597450831434118
+    },
+    {
+      "fold": 3,
+      "train_beats": 33082,
+      "val_beats": 8390,
+      "train_records_count": 30,
+      "val_records_count": 8,
+      "accuracy": 0.38581644815256255,
+      "balanced_accuracy": 0.3919835311213369,
+      "sensitivity": 0.7839670622426738,
+      "specificity": 0.0,
+      "f1_score": 0.5568074309796164
+    },
+    {
+      "fold": 4,
+      "train_beats": 32866,
+      "val_beats": 8606,
+      "train_records_count": 30,
+      "val_records_count": 8,
+      "accuracy": 0.5500813386009761,
+      "balanced_accuracy": 0.5513143150831534,
+      "sensitivity": 0.7723767235335359,
+      "specificity": 0.330251906632771,
+      "f1_score": 0.6306048464033581
+    },
+    {
+      "fold": 5,
+      "train_beats": 33352,
+      "val_beats": 8120,
+      "train_records_count": 31,
+      "val_records_count": 7,
+      "accuracy": 0.5647783251231527,
+      "balanced_accuracy": 0.5623662570053254,
+      "sensitivity": 0.8782693717917379,
+      "specificity": 0.24646314221891288,
+      "f1_score": 0.6703358208955223
+    }
+  ],
+  "mean_accuracy": 0.581258725816151,
+  "std_accuracy": 0.17190115867394315,
+  "mean_balanced_accuracy": 0.5847671404641263,
+  "std_balanced_accuracy": 0.17030593788455378,
+  "mean_sensitivity": 0.8450606166593456,
+  "std_sensitivity": 0.07833237081503924,
+  "mean_specificity": 0.32447366426890695,
+  "std_specificity": 0.35877188158804585,
+  "mean_f1": 0.6820794856644925,
+  "std_f1": 0.11262907734724316
+}

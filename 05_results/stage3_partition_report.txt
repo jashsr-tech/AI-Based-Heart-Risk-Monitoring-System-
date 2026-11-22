@@ -1,0 +1,31 @@
+========================================================================
+ECG FINAL PRO — STAGE 3: RECORD-SEPARATED DATASET PARTITIONING
+========================================================================
+Dataset loaded: 52,964 rows across 48 records.
+Total Normal records:   13
+Total Abnormal records: 35
+
+[PASS] Zero patient / record leakage verified: set(train) & set(test) is empty.
+
+Partition Summary:
+  Training set   : 41,472 beats (38 records)
+    - Normal (0) : 20,806 beats (10 records)
+    - Abnormal(1): 20,666 beats (28 records)
+  Independent Test: 11,492 beats (10 records)
+    - Normal (0) : 5,676 beats (3 records)
+    - Abnormal(1): 5,816 beats (7 records)
+
+Training record IDs (38):
+  Normal (0)  : [101, 103, 105, 109, 111, 112, 115, 121, 122, 123]
+  Abnormal (1): [102, 106, 107, 114, 116, 117, 119, 200, 201, 202, 203, 205, 207, 208, 209, 210, 212, 214, 215, 217, 219, 221, 222, 228, 230, 231, 232, 234]
+
+Independent Test record IDs (10):
+  Normal (0)  : [100, 113, 124]
+  Abnormal (1): [104, 108, 118, 213, 220, 223, 233]
+
+Saved partition manifest to: C:\Users\srjas\OneDrive\Desktop\ECG FINAL PROJ\05_results\stage3_record_splits.json
+
+========================================================================
+STAGE 3 RESULT: PASSED
+Record-separated partition created and certified ready for Stage 4.
+========================================================================

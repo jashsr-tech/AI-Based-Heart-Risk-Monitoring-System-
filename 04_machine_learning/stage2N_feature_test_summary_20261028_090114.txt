@@ -1,0 +1,29 @@
+STAGE 2N — CONTROLLED FEATURE INVESTIGATION
+============================================================
+Baseline class: ABNORMAL
+Baseline normal probability: 1.36%
+Baseline abnormal probability: 98.64%
+Tests completed: 70
+Class-switching tests: 7
+
+Feature summary:
+                Tests  ClassChanges  MinimumAbnormalProbability  MaximumAbnormalProbability
+ChangedFeature                                                                             
+HRV                 7             3                        0.00                      100.00
+QRSDuration         7             3                        6.40                       98.64
+QTInterval          7             1                        0.00                       98.64
+HeartRate           7             0                       97.37                      100.00
+PRInterval          7             0                       98.64                       99.70
+PAmplitude          7             0                       98.64                       98.64
+RAmplitude          7             0                       98.64                       98.64
+RRInterval          7             0                       98.64                       98.64
+STSegment           7             0                       98.64                       98.64
+TAmplitude          7             0                       98.64                       98.64
+
+Interpretation limits:
+- These are model sensitivity tests, not medical tests.
+- Only one input feature is changed per scenario.
+- Some feature combinations may be physiologically inconsistent.
+- Model probabilities are not clinically calibrated risk estimates.
+- Dataset percentiles are not clinical reference ranges.
+- No model, scaler, dataset, or baseline vector was modified.
