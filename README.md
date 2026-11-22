@@ -269,19 +269,5 @@ This project is an academic engineering prototype intended for educational, rese
 
 It is not a certified medical device and must not be used for clinical diagnosis, treatment decisions or emergency medical assessment. Machine-learning predictions are experimental and are not clinically validated.
 
-## 👨‍💻 Project Contributors
 
-- D R Vishal
-- Harshith Kumar K M
-- Jashwanth S R
 
-**Project Guide:** Dr. Harshada J Patil
-
-## 📜 License
-
-No license has currently been specified. Please add an appropriate open-source license if you intend to permit reuse or distribution.
-
----
-
-**Developed as a Final-Year Engineering Project**  
-Electronics and Communication Engineering (ECE)
